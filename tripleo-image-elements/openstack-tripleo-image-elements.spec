@@ -18,7 +18,11 @@ Patch0008:  0008-Install-lvm2-package-for-cinder.patch
 Patch0009:  0009-Common-cinder-install-code.patch
 
 BuildArch: noarch
+BuildRequires: python
+BuildRequires: python2-devel
 BuildRequires: python-setuptools
+BuildRequires: python-d2to1
+BuildRequires: python-pbr
 
 Requires: diskimage-builder
 
