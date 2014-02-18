@@ -1,4 +1,4 @@
-%global commit d9f08dc78577af98f940fb7a873ba7276f01180f
+%global commit a119ca5477cfbac1504380d3d2de92e325ce621c
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 %global repo_name instack-undercloud
 
