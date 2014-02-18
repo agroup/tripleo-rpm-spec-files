@@ -16,6 +16,7 @@ Patch0006:  0006-Add-fedora-rdo-icehouse-element.patch
 Patch0007:  0007-Fix-typo.patch
 Patch0008:  0008-Install-lvm2-package-for-cinder.patch
 Patch0009:  0009-Common-cinder-install-code.patch
+Patch0010:  0010-Add-missing-x.patch
 
 BuildArch: noarch
 BuildRequires: python
@@ -43,6 +44,7 @@ program.
 %patch0007 -p1
 %patch0008 -p1
 %patch0009 -p1
+%patch0010 -p1
 
 %build
 %{__python} setup.py build
