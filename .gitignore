@@ -38,3 +38,4 @@ nosetests.xml
 # rpm build stuff
 *.tar.gz
 *.src.rpm
+review-*
