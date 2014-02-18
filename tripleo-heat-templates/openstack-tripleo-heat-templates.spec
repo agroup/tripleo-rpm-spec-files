@@ -2,7 +2,7 @@ Name:		openstack-tripleo-heat-templates
 Summary:	Heat templates for TripleO
 Version:	0.4.0
 Release:	1%{?dist}
-License:	None
+License:	ASL 2.0
 Group:		System Environment/Base
 URL:		https://wiki.openstack.org/wiki/TripleO
 Source0:    http://tarballs.openstack.org/tripleo-heat-templates/tripleo-heat-templates-%{version}.tar.gz
