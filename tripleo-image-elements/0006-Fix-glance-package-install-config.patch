@@ -1,7 +1,7 @@
 From 9691188d6bd16d23db049fd769c9371365541d6e Mon Sep 17 00:00:00 2001
 From: James Slagle <jslagle@redhat.com>
 Date: Thu, 6 Feb 2014 12:30:45 -0500
-Subject: [PATCH 05/12] Fix glance package install config
+Subject: [PATCH 06/14] Fix glance package install config
 
 The package install for glance drops the needed paste ini config under
 /usr/share/glance, so we need to symlink these files under /etc/glance.

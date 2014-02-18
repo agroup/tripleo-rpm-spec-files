@@ -1,7 +1,7 @@
 From 6cdec90acb28c62fa83b64611e8e8f8b5416c46e Mon Sep 17 00:00:00 2001
 From: James Slagle <jslagle@redhat.com>
 Date: Mon, 3 Feb 2014 13:30:36 -0500
-Subject: [PATCH 02/12] Add create-dir service for nova
+Subject: [PATCH 03/14] Add create-dir service for nova
 
 The service will ensure /var/run/nova is created and nova owned,
 which is required by the nova-compute daemon.

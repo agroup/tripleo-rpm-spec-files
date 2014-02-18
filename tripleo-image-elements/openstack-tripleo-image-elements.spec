@@ -7,16 +7,20 @@ Group:		System Environment/Base
 URL:		https://wiki.openstack.org/wiki/TripleO
 Source0:    http://tarballs.openstack.org/tripleo-image-elements/tripleo-image-elements-master.tar.gz
 
-Patch0001:  0001-Add-create-dir-service-for-neutron.patch
-Patch0002:  0002-Add-create-dir-service-for-nova.patch
-Patch0003:  0003-Fix-neutron-package-install.patch
-Patch0004:  0004-Correct-owner-for-glance-api-log-file.patch
-Patch0005:  0005-Fix-glance-package-install-config.patch
-Patch0006:  0006-Add-fedora-rdo-icehouse-element.patch
-Patch0007:  0007-Fix-typo.patch
-Patch0008:  0008-Install-lvm2-package-for-cinder.patch
-Patch0009:  0009-Common-cinder-install-code.patch
-Patch0010:  0010-Add-missing-x.patch
+Patch0001:  0001-Ability-to-add-create-dir-service-separately.patch
+Patch0002:  0002-Add-create-dir-service-for-neutron.patch
+Patch0003:  0003-Add-create-dir-service-for-nova.patch
+Patch0004:  0004-Fix-neutron-package-install.patch
+Patch0005:  0005-Correct-owner-for-glance-api-log-file.patch
+Patch0006:  0006-Fix-glance-package-install-config.patch
+Patch0007:  0007-Add-fedora-rdo-icehouse-element.patch
+Patch0008:  0008-Fix-typo.patch
+Patch0009:  0009-Install-lvm2-package-for-cinder.patch
+Patch0010:  0010-Common-cinder-install-code.patch
+Patch0011:  0011-Use-os-svc-restart-for-cinder-api.patch
+Patch0012:  0012-Remove-unneeded-chown-of-var-run-nova.patch
+Patch0013:  0013-Add-create-dir-service-for-neutron-ovs-agent.patch
+Patch0014:  0014-Add-missing-x.patch
 
 BuildArch: noarch
 BuildRequires: python
@@ -45,6 +49,10 @@ program.
 %patch0008 -p1
 %patch0009 -p1
 %patch0010 -p1
+%patch0011 -p1
+%patch0012 -p1
+%patch0013 -p1
+%patch0014 -p1
 
 %build
 %{__python} setup.py build

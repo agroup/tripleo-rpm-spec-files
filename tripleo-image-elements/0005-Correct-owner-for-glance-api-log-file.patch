@@ -1,7 +1,7 @@
 From eed1086f703609203b805f11bfe803c96cc8b8c6 Mon Sep 17 00:00:00 2001
 From: James Slagle <jslagle@redhat.com>
 Date: Wed, 5 Feb 2014 16:56:36 -0500
-Subject: [PATCH 04/12] Correct owner for glance api log file
+Subject: [PATCH 05/14] Correct owner for glance api log file
 
 Change-Id: Ia61f06eb91442c5d2d30dadd322f773710b50106
 ---

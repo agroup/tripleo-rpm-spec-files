@@ -1,7 +1,7 @@
 From 865c02f71483195c8f27ec94689833eb00049df2 Mon Sep 17 00:00:00 2001
 From: James Slagle <jslagle@redhat.com>
 Date: Mon, 3 Feb 2014 13:29:28 -0500
-Subject: [PATCH 01/12] Add create-dir service for neutron
+Subject: [PATCH 02/14] Add create-dir service for neutron
 
 The service will ensure /var/run/neutron is created and neutron owned,
 which is required by the neutron daemon.

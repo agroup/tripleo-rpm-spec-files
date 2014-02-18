@@ -1,0 +1,26 @@
+From 566d60ad703852b40f13c810063fb365f95620d4 Mon Sep 17 00:00:00 2001
+From: James Slagle <jslagle@redhat.com>
+Date: Fri, 14 Feb 2014 11:16:47 -0500
+Subject: [PATCH 13/14] Add create-dir service for neutron ovs agent
+
+The service will ensure /var/run/neutron is created and neutron owned,
+which is required by the neutron-openvswitch-agent daemon.
+
+Change-Id: Ia22ceab97f7ad87f1e22679ab84c00b215b202c9
+---
+ .../install.d/neutron-package-install/80-neutron-openvswitch-agent      | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/elements/neutron-openvswitch-agent/install.d/neutron-package-install/80-neutron-openvswitch-agent b/elements/neutron-openvswitch-agent/install.d/neutron-package-install/80-neutron-openvswitch-agent
+index c4e0ce3..3c14c42 100755
+--- a/elements/neutron-openvswitch-agent/install.d/neutron-package-install/80-neutron-openvswitch-agent
++++ b/elements/neutron-openvswitch-agent/install.d/neutron-package-install/80-neutron-openvswitch-agent
+@@ -3,3 +3,5 @@
+ set -eux
+ 
+ install-packages openstack-neutron-openvswitch
++
++os-svc-daemon -n neutron-openvswitch-agent -u neutron -c noop -d
+-- 
+1.8.5.3
+

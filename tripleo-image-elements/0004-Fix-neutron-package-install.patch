@@ -1,7 +1,7 @@
 From a2464f6635a322d003c4b4316c030e914cea42dd Mon Sep 17 00:00:00 2001
 From: James Slagle <jslagle@redhat.com>
 Date: Wed, 5 Feb 2014 16:37:29 -0500
-Subject: [PATCH 03/12] Fix neutron package install
+Subject: [PATCH 04/14] Fix neutron package install
 
 Previously the neutron element was installing neutron-server. This
 should actually be happening in the neutron-server element itself.

@@ -1,0 +1,32 @@
+From 82d54ee87ba5ceed4000d4c86e042dbbe4c6e0e4 Mon Sep 17 00:00:00 2001
+From: James Slagle <jslagle@redhat.com>
+Date: Thu, 13 Feb 2014 17:56:46 -0500
+Subject: [PATCH 12/14] Remove unneeded chown of /var/run/nova
+
+Both upstart and systemd daemons are defined to create their own run
+directories, and set the correct owners (see os-svc-daemon), so this
+line can be removed. It causes an error for the package install b/c the
+directory does not yet exist since the service has not been enabled and
+started yet.
+
+Change-Id: I598fe6d6ef55c997dcd5c9acfcc85ddac6826228
+---
+ .../nova-compute/os-refresh-config/post-configure.d/80-nova-compute     | 2 --
+ 1 file changed, 2 deletions(-)
+
+diff --git a/elements/nova-compute/os-refresh-config/post-configure.d/80-nova-compute b/elements/nova-compute/os-refresh-config/post-configure.d/80-nova-compute
+index 238290f..9b0719e 100755
+--- a/elements/nova-compute/os-refresh-config/post-configure.d/80-nova-compute
++++ b/elements/nova-compute/os-refresh-config/post-configure.d/80-nova-compute
+@@ -3,8 +3,6 @@ set -eux
+ 
+ modprobe nbd || true
+ 
+-chown -R nova:nova /var/run/nova
+-
+ os-svc-enable -n nova-compute
+ 
+ os-svc-restart -n nova-compute
+-- 
+1.8.5.3
+

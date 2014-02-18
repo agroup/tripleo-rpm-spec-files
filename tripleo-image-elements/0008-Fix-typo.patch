@@ -1,7 +1,7 @@
 From 38c01c8470fafcb44c3d2eeb742b32d100148e88 Mon Sep 17 00:00:00 2001
 From: James Slagle <jslagle@redhat.com>
 Date: Thu, 13 Feb 2014 16:45:23 -0500
-Subject: [PATCH 07/12] Fix typo
+Subject: [PATCH 08/14] Fix typo
 
 Directory should be called cinder-package-install.
 
