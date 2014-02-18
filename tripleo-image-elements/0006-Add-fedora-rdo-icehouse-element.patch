@@ -1,0 +1,45 @@
+From c579d9a6fcf80fcf407de6d603f127ef1953e25b Mon Sep 17 00:00:00 2001
+From: James Slagle <jslagle@redhat.com>
+Date: Thu, 13 Feb 2014 15:15:03 -0500
+Subject: [PATCH 06/12] Add fedora-rdo-icehouse element
+
+The element enables the yum repository for RDO icehouse.
+
+Change-Id: Ib3073b9aeae7ef6009c7ebbf37613999ce15b778
+---
+ elements/fedora-rdo-icehouse/README.md                          | 1 +
+ elements/fedora-rdo-icehouse/element-deps                       | 1 +
+ elements/fedora-rdo-icehouse/pre-install.d/10-rdo-icehouse-repo | 5 +++++
+ 3 files changed, 7 insertions(+)
+ create mode 100644 elements/fedora-rdo-icehouse/README.md
+ create mode 100644 elements/fedora-rdo-icehouse/element-deps
+ create mode 100755 elements/fedora-rdo-icehouse/pre-install.d/10-rdo-icehouse-repo
+
+diff --git a/elements/fedora-rdo-icehouse/README.md b/elements/fedora-rdo-icehouse/README.md
+new file mode 100644
+index 0000000..49cbf62
+--- /dev/null
++++ b/elements/fedora-rdo-icehouse/README.md
+@@ -0,0 +1 @@
++Enables the RDO yum repository for icehouse on Fedora.
+diff --git a/elements/fedora-rdo-icehouse/element-deps b/elements/fedora-rdo-icehouse/element-deps
+new file mode 100644
+index 0000000..35a143b
+--- /dev/null
++++ b/elements/fedora-rdo-icehouse/element-deps
+@@ -0,0 +1 @@
++fedora
+diff --git a/elements/fedora-rdo-icehouse/pre-install.d/10-rdo-icehouse-repo b/elements/fedora-rdo-icehouse/pre-install.d/10-rdo-icehouse-repo
+new file mode 100755
+index 0000000..40f9edf
+--- /dev/null
++++ b/elements/fedora-rdo-icehouse/pre-install.d/10-rdo-icehouse-repo
+@@ -0,0 +1,5 @@
++#!/bin/bash
++
++set -eux
++
++install-packages http://repos.fedorapeople.org/repos/openstack/openstack-icehouse/rdo-release-icehouse-1.noarch.rpm
+-- 
+1.8.5.3
+

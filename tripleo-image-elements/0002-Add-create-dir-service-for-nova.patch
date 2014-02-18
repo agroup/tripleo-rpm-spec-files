@@ -1,0 +1,26 @@
+From 6cdec90acb28c62fa83b64611e8e8f8b5416c46e Mon Sep 17 00:00:00 2001
+From: James Slagle <jslagle@redhat.com>
+Date: Mon, 3 Feb 2014 13:30:36 -0500
+Subject: [PATCH 02/12] Add create-dir service for nova
+
+The service will ensure /var/run/nova is created and nova owned,
+which is required by the nova-compute daemon.
+
+Change-Id: I09c2e8734e0c81911ea7cbbc23bff2b1837dacea
+---
+ elements/nova-compute/install.d/nova-package-install/80-nova-compute | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/elements/nova-compute/install.d/nova-package-install/80-nova-compute b/elements/nova-compute/install.d/nova-package-install/80-nova-compute
+index 23eabab..8abf46c 100755
+--- a/elements/nova-compute/install.d/nova-package-install/80-nova-compute
++++ b/elements/nova-compute/install.d/nova-package-install/80-nova-compute
+@@ -10,3 +10,5 @@ install-packages openstack-nova-compute
+ # well, since the nova compute packages automatically pull in libvirt.
+ rm -f /etc/libvirt/qemu/networks/autostart/default.xml
+ rm -f /etc/libvirt/qemu/networks/default.xml
++
++os-svc-daemon -n nova-compute -u nova -c noop -d
+-- 
+1.8.5.3
+

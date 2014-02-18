@@ -1,0 +1,79 @@
+From a2464f6635a322d003c4b4316c030e914cea42dd Mon Sep 17 00:00:00 2001
+From: James Slagle <jslagle@redhat.com>
+Date: Wed, 5 Feb 2014 16:37:29 -0500
+Subject: [PATCH 03/12] Fix neutron package install
+
+Previously the neutron element was installing neutron-server. This
+should actually be happening in the neutron-server element itself.
+Likewise, the neutron-dhcp-agent should also install the package it
+needs. In both cases, the package is just openstack-neutron, but only
+the intended services will be enabled and started due to the
+os-refresh-config scripts. E.g., if you only include neutron-dhcp-agent,
+and not neuton-server, only the neutron-dhcp-agent will be enabled.
+
+Change-Id: I11e52e9cdd6062b03d389971acad1c52a9cc3ea8
+---
+ .../neutron-package-install/80-neutron-dhcp-agent          |  7 +++++++
+ .../install.d/neutron-package-install/76-neutron           | 14 ++++++++++++++
+ .../neutron/install.d/neutron-package-install/76-neutron   | 14 --------------
+ 3 files changed, 21 insertions(+), 14 deletions(-)
+ create mode 100644 elements/neutron-dhcp-agent/install.d/neutron-package-install/80-neutron-dhcp-agent
+ create mode 100755 elements/neutron-server/install.d/neutron-package-install/76-neutron
+ delete mode 100755 elements/neutron/install.d/neutron-package-install/76-neutron
+
+diff --git a/elements/neutron-dhcp-agent/install.d/neutron-package-install/80-neutron-dhcp-agent b/elements/neutron-dhcp-agent/install.d/neutron-package-install/80-neutron-dhcp-agent
+new file mode 100644
+index 0000000..e642e59
+--- /dev/null
++++ b/elements/neutron-dhcp-agent/install.d/neutron-package-install/80-neutron-dhcp-agent
+@@ -0,0 +1,7 @@
++#!/bin/bash
++
++set -eux
++
++install-packages openstack-neutron
++
++os-svc-daemon -n neutron-dhcp-agent -u neutron -c noop -d
+diff --git a/elements/neutron-server/install.d/neutron-package-install/76-neutron b/elements/neutron-server/install.d/neutron-package-install/76-neutron
+new file mode 100755
+index 0000000..ce85a3f
+--- /dev/null
++++ b/elements/neutron-server/install.d/neutron-package-install/76-neutron
+@@ -0,0 +1,14 @@
++#!/bin/bash
++
++set -eux
++
++install-packages openstack-neutron openstack-neutron-ml2
++
++ln -s /etc/neutron/plugins/ml2/ml2_conf.ini /etc/neutron/plugin.ini
++
++os-svc-daemon -n neutron-server -u neutron -c noop -d
++
++# Packaged neutron is providing a requires.txt which breaks dependencies at
++# runtime. See:
++# https://bugzilla.redhat.com/show_bug.cgi?id=1057615
++rm -f /usr/lib/python2.7/site-packages/neutron-*.egg-info/requires.txt
+diff --git a/elements/neutron/install.d/neutron-package-install/76-neutron b/elements/neutron/install.d/neutron-package-install/76-neutron
+deleted file mode 100755
+index ce85a3f..0000000
+--- a/elements/neutron/install.d/neutron-package-install/76-neutron
++++ /dev/null
+@@ -1,14 +0,0 @@
+-#!/bin/bash
+-
+-set -eux
+-
+-install-packages openstack-neutron openstack-neutron-ml2
+-
+-ln -s /etc/neutron/plugins/ml2/ml2_conf.ini /etc/neutron/plugin.ini
+-
+-os-svc-daemon -n neutron-server -u neutron -c noop -d
+-
+-# Packaged neutron is providing a requires.txt which breaks dependencies at
+-# runtime. See:
+-# https://bugzilla.redhat.com/show_bug.cgi?id=1057615
+-rm -f /usr/lib/python2.7/site-packages/neutron-*.egg-info/requires.txt
+-- 
+1.8.5.3
+
