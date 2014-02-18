@@ -2,7 +2,6 @@
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 %global repo_name tripleo-incubator
 
-
 Name:           openstack-tripleo
 Version:        0.0.1
 Release:        1%{?dist}
@@ -12,6 +11,8 @@ Group:          Applications/System
 License:        ASL 2.0
 URL:            https://wiki.openstack.org/wiki/TripleO
 Source0:        https://github.com/openstack/%{repo_name}/archive/%{commit}.tar.gz
+
+BuildArch:      noarch
 
 BuildRequires:    python-sphinx
 BuildRequires:    python-oslo-sphinx
