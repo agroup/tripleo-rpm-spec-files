@@ -1,4 +1,4 @@
-%global commit 33e643185161c3b6a93d1c82c962a907a32995f0
+%global commit d9f08dc78577af98f940fb7a873ba7276f01180f
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 %global repo_name instack-undercloud
 
@@ -36,6 +36,8 @@ cp -ar elements %{buildroot}/%{_datarootdir}/instack-undercloud
 # scripts
 install -d -m 755 %{buildroot}/%{_bindir}
 cp -ar scripts/* %{buildroot}/%{_bindir}
+# json files
+cp -ar json-files %{buildroot}/%{_datarootdir}/instack-undercloud
 
 
 %files
