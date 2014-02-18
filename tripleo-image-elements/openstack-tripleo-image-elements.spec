@@ -46,6 +46,17 @@ program.
 %install
 %{__python} setup.py install -O1 --skip-build --root=%{buildroot}
 
+# remove .git-keep-empty files that get installed
+find %{buildroot} -name .git-keep-empty | xargs rm -f
+
+# These are the scripts created by our patches, but the patches don't bring +x
+# along with them, so to avoid some rpmlint errors, +x them here. Once patches
+# are marged upstream, these lines can be removed.
+chmod +x %{buildroot}/%{_datarootdir}/tripleo-image-elements/neutron-dhcp-agent/install.d/neutron-package-install/80-neutron-dhcp-agent
+chmod +x %{buildroot}/%{_datarootdir}/tripleo-image-elements/neutron-server/install.d/neutron-package-install/76-neutron
+chmod +x %{buildroot}/%{_datarootdir}/tripleo-image-elements/fedora-rdo-icehouse/pre-install.d/10-rdo-icehouse-repo
+chmod +x %{buildroot}/%{_datarootdir}/tripleo-image-elements/cinder/install.d/73-cinder
+
 %files
 %doc LICENSE
 %doc README.md
@@ -55,5 +66,5 @@ program.
 %{_datadir}/tripleo-image-elements
 
 %changelog
-* Mon Feb 17 2013 James Slagle <jslagle@redhat.com> - 
+* Mon Feb 17 2014 James Slagle <jslagle@redhat.com> - 0.5.1-1
 - Initial rpm build.
