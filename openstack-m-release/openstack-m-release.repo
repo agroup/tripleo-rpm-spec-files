@@ -1,0 +1,15 @@
+# Place this file in your /etc/yum.repos.d/ directory
+
+[fedora-openstack-m]
+name=openstack-m packages
+baseurl=http://repos.fedorapeople.org/repos/openstack-m/openstack-m/fedora-$releasever/
+enabled=1
+skip_if_unavailable=1
+gpgcheck=0
+
+[fedora-openstack-m-source]
+name=openstack-m packages - Source
+baseurl=http://repos.fedorapeople.org/repos/openstack-m/openstack-m/fedora-$releasever/SRPMS
+enabled=0
+skip_if_unavailable=1
+gpgcheck=0
