@@ -46,7 +46,7 @@ cp LICENSE %{buildroot}/%{_datarootdir}/doc/tripleo-heat-templates
 %doc %{_datarootdir}/doc/tripleo-heat-templates
 
 %changelog
-* Mon Feb 17 2013 James Slagle <jslagle@redhat.com> - 0.4.0
+* Mon Feb 17 2014 James Slagle <jslagle@redhat.com> - 0.4.0
 - Update spec file for Fedora Packaging 
 
 * Thu Sep 19 2013 Ben Nemec <bnemec@redhat.com> - 0.0.1-1
