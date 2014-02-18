@@ -5,7 +5,17 @@ Release:    1%{?dist}
 License:	ASL 2.0
 Group:		System Environment/Base
 URL:		https://wiki.openstack.org/wiki/TripleO
-Source0:    http://tarballs.openstack.org/tripleo-image-elements/tripleo-image-elements-%{version}.tar.gz
+Source0:    http://tarballs.openstack.org/tripleo-image-elements/tripleo-image-elements-master.tar.gz
+
+Patch0001:  0001-Add-create-dir-service-for-neutron.patch
+Patch0002:  0002-Add-create-dir-service-for-nova.patch
+Patch0003:  0003-Fix-neutron-package-install.patch
+Patch0004:  0004-Correct-owner-for-glance-api-log-file.patch
+Patch0005:  0005-Fix-glance-package-install-config.patch
+Patch0006:  0006-Add-fedora-rdo-icehouse-element.patch
+Patch0007:  0007-Fix-typo.patch
+Patch0008:  0008-Install-lvm2-package-for-cinder.patch
+Patch0009:  0009-Common-cinder-install-code.patch
 
 BuildArch: noarch
 BuildRequires: python-setuptools
@@ -18,7 +28,17 @@ diskimage-builder that can be used to build OpenStack images for the TripleO
 program.
 
 %prep
-%setup -q -n tripleo-image-elements-%{version}
+%setup -q -n tripleo-image-elements-0.0.1.dev148.ga84a463
+
+%patch0001 -p1
+%patch0002 -p1
+%patch0003 -p1
+%patch0004 -p1
+%patch0005 -p1
+%patch0006 -p1
+%patch0007 -p1
+%patch0008 -p1
+%patch0009 -p1
 
 %build
 %{__python} setup.py build
