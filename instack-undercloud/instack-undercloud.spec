@@ -12,6 +12,8 @@ License:	ASL 2.0
 URL:		https://github.com/slagle/instack-undercloud
 Source0:    https://github.com/slagle/%{repo_name}/archive/%{commit}.tar.gz
 
+BuildArch:  noarch
+
 Requires:	python-instack
 
 
