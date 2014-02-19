@@ -1,4 +1,4 @@
-%global commit a119ca5477cfbac1504380d3d2de92e325ce621c
+%global commit d8a8ed6db12e14cc86133ba28b9ac695d2400093
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 %global repo_name instack-undercloud
 
@@ -47,6 +47,7 @@ cp -ar json-files %{buildroot}/%{_datarootdir}/instack-undercloud
 %doc instack-virt.answers.sample
 %{_datarootdir}/instack-undercloud
 %{_bindir}/install-undercloud
+%{_bindir}/install-undercloud-packages
 %{_bindir}/deploy-overcloud
 %{_bindir}/overcloud
 
