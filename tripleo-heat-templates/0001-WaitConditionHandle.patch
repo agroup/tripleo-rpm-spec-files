@@ -1,0 +1,13 @@
+diff --git a/overcloud-source.yaml b/overcloud-source.yaml
+index 2bec12f..7b89744 100644
+--- a/overcloud-source.yaml
++++ b/overcloud-source.yaml
+@@ -164,7 +164,7 @@ Resources:
+       Count: '1'
+       Timeout: '1800'
+   notCompute0CompletionHandle:
+-    Type: OS::Heat::UpdateWaitConditionHandle
++    Type: AWS::CloudFormation::WaitConditionHandle
+   NovaCompute0Key:
+     Type: FileInclude
+     Path: nova-compute-instance.yaml

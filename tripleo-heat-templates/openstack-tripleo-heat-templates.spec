@@ -7,6 +7,7 @@ Group:		System Environment/Base
 URL:		https://wiki.openstack.org/wiki/TripleO
 Source0:    http://tarballs.openstack.org/tripleo-heat-templates/tripleo-heat-templates-%{version}.tar.gz
 
+Patch0001:  0001-WaitConditionHandle.patch
 
 BuildArch: noarch
 BuildRequires: python
@@ -23,6 +24,8 @@ building Heat Templates to do deployments of OpenStack.
 
 %prep
 %setup -q -n tripleo-heat-templates-%{version}
+
+%patch0001 -p1
 
 %build
 %{__python} setup.py build
