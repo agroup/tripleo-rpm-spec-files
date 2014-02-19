@@ -21,6 +21,7 @@ Patch0011:  0011-Use-os-svc-restart-for-cinder-api.patch
 Patch0012:  0012-Remove-unneeded-chown-of-var-run-nova.patch
 Patch0013:  0013-Add-create-dir-service-for-neutron-ovs-agent.patch
 Patch0014:  0014-Add-missing-x.patch
+Patch0015:  0015-Move-99-neutronclient-under-neutron-source-install.patch
 
 BuildArch: noarch
 BuildRequires: python
@@ -53,6 +54,7 @@ program.
 %patch0012 -p1
 %patch0013 -p1
 %patch0014 -p1
+%patch0015 -p1
 
 %build
 %{__python} setup.py build
@@ -70,6 +72,7 @@ chmod +x %{buildroot}/%{_datarootdir}/tripleo-image-elements/neutron-dhcp-agent/
 chmod +x %{buildroot}/%{_datarootdir}/tripleo-image-elements/neutron-server/install.d/neutron-package-install/76-neutron
 chmod +x %{buildroot}/%{_datarootdir}/tripleo-image-elements/fedora-rdo-icehouse/pre-install.d/10-rdo-icehouse-repo
 chmod +x %{buildroot}/%{_datarootdir}/tripleo-image-elements/cinder/install.d/73-cinder
+chmod +x %{buildroot}/%{_datarootdir}/tripleo-image-elements/neutron/install.d/neutron-source-install/99-neutronclient
 
 %files
 %doc LICENSE
