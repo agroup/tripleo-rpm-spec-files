@@ -18,8 +18,8 @@ Patch0002:		0002-Switch-over-to-oslosphinx.patch
 
 BuildArch:		noarch
 
-BuildRequires:	python-sphinx
-BuildRequires:	python-oslo-sphinx
+BuildRequires:		python-sphinx
+BuildRequires:		python-oslo-sphinx
 
 %description
 TripleO is a program aimed at installing, upgrading and operating OpenStack
@@ -34,7 +34,7 @@ Requires:		%{name} = %{version}-%{release}
 
 BuildArch:		noarch
 
-BuildRequires:	python-sphinx
+BuildRequires:		python-sphinx
 
 %description	doc
 TripleO is a program aimed at installing, upgrading and operating OpenStack
