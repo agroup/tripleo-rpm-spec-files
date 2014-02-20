@@ -1,35 +1,35 @@
 Name:		openstack-tripleo-image-elements
 Summary:	OpenStack TripleO Image Elements for diskimage-builder
-Version:    0.6.0
-Release:    1%{?dist}
+Version:        0.6.0
+Release:        1%{?dist}
 License:	ASL 2.0
 Group:		System Environment/Base
 URL:		https://wiki.openstack.org/wiki/TripleO
-Source0:    http://tarballs.openstack.org/tripleo-image-elements/tripleo-image-elements-%{version}.tar.gz
+Source0:        http://tarballs.openstack.org/tripleo-image-elements/tripleo-image-elements-%{version}.tar.gz
 
-Patch0001:  0001-Ability-to-add-create-dir-service-separately.patch
-Patch0002:  0002-Add-create-dir-service-for-neutron.patch
-Patch0003:  0003-Add-create-dir-service-for-nova.patch
-Patch0004:  0004-Fix-neutron-package-install.patch
-Patch0005:  0005-Correct-owner-for-glance-api-log-file.patch
-Patch0006:  0006-Fix-glance-package-install-config.patch
-Patch0007:  0007-Add-fedora-rdo-icehouse-element.patch
-Patch0008:  0008-Fix-typo.patch
-Patch0009:  0009-Install-lvm2-package-for-cinder.patch
-Patch0010:  0010-Common-cinder-install-code.patch
-Patch0011:  0011-Use-os-svc-restart-for-cinder-api.patch
-Patch0012:  0012-Remove-unneeded-chown-of-var-run-nova.patch
-Patch0013:  0013-Add-create-dir-service-for-neutron-ovs-agent.patch
-Patch0014:  0014-Add-missing-x.patch
+Patch0001:      0001-Ability-to-add-create-dir-service-separately.patch
+Patch0002:      0002-Add-create-dir-service-for-neutron.patch
+Patch0003:      0003-Add-create-dir-service-for-nova.patch
+Patch0004:      0004-Fix-neutron-package-install.patch
+Patch0005:      0005-Correct-owner-for-glance-api-log-file.patch
+Patch0006:      0006-Fix-glance-package-install-config.patch
+Patch0007:      0007-Add-fedora-rdo-icehouse-element.patch
+Patch0008:      0008-Fix-typo.patch
+Patch0009:      0009-Install-lvm2-package-for-cinder.patch
+Patch0010:      0010-Common-cinder-install-code.patch
+Patch0011:      0011-Use-os-svc-restart-for-cinder-api.patch
+Patch0012:      0012-Remove-unneeded-chown-of-var-run-nova.patch
+Patch0013:      0013-Add-create-dir-service-for-neutron-ovs-agent.patch
+Patch0014:      0014-Add-missing-x.patch
 
-BuildArch: noarch
-BuildRequires: python
-BuildRequires: python2-devel
-BuildRequires: python-setuptools
-BuildRequires: python-d2to1
-BuildRequires: python-pbr
+BuildArch:      noarch
+BuildRequires:  python
+BuildRequires:  python2-devel
+BuildRequires:  python-setuptools
+BuildRequires:  python-d2to1
+BuildRequires:  python-pbr
 
-Requires: diskimage-builder
+Requires:       diskimage-builder
 
 %description
 OpenStack TripleO Image Elements is a collection of elements for
