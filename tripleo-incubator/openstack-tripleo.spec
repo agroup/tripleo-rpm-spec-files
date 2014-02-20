@@ -13,8 +13,11 @@ License:		ASL 2.0
 URL:			https://wiki.openstack.org/wiki/TripleO
 Source0:		https://github.com/openstack/%{repo_name}/archive/%{commit}.tar.gz
 
+# Upstream patch: https://review.openstack.org/#/c/74452/
 Patch0001:		0001-Add-shebang.patch
-Patch0002:		0002-Switch-over-to-oslosphinx.patch
+# Upstream switched to oslosphinx in https://review.openstack.org/#/c/73353/,
+# but that does not yet exist in Fedora.
+Patch0002:		0002-Switch-back-to-oslo.sphinx.patch
 
 BuildArch:		noarch
 
