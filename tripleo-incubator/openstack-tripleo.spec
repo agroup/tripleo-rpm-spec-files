@@ -42,7 +42,7 @@ BuildRequires:		python-sphinx
 %description	doc
 TripleO is a program aimed at installing, upgrading and operating OpenStack
 clouds using OpenStack's own cloud facilities as the foundations - building on
-nova, neutron and heat to automate fleet management at datacentre scale.
+nova, neutron and heat to automate fleet management at datacenter scale.
 
 This package contains documentation files for TripleO.
 
@@ -91,7 +91,7 @@ cp -r doc/build/html/* %{buildroot}%{_datarootdir}/doc/tripleo/html
 %{_datarootdir}/doc/tripleo
 
 %changelog
-* Mon Feb 17 2014 James Slagle <jslagle@redhat.com> 0.0.1-1.20140211git
+* Mon Feb 17 2014 James Slagle <jslagle@redhat.com> 0.0.1-1.20140220git
 - Updates to spec file to match Fedora packaging guidelines.
 
 * Mon Sep 23 2013 Ryan Brady <rbrady@redhat.com> 0.0.1-1
