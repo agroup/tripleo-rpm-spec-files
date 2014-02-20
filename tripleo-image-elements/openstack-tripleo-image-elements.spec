@@ -1,11 +1,11 @@
 Name:		openstack-tripleo-image-elements
 Summary:	OpenStack TripleO Image Elements for diskimage-builder
-Version:    0.5.1
+Version:    0.6.0
 Release:    1%{?dist}
 License:	ASL 2.0
 Group:		System Environment/Base
 URL:		https://wiki.openstack.org/wiki/TripleO
-Source0:    http://tarballs.openstack.org/tripleo-image-elements/tripleo-image-elements-master.tar.gz
+Source0:    http://tarballs.openstack.org/tripleo-image-elements/tripleo-image-elements-%{version}.tar.gz
 
 Patch0001:  0001-Ability-to-add-create-dir-service-separately.patch
 Patch0002:  0002-Add-create-dir-service-for-neutron.patch
@@ -21,7 +21,6 @@ Patch0011:  0011-Use-os-svc-restart-for-cinder-api.patch
 Patch0012:  0012-Remove-unneeded-chown-of-var-run-nova.patch
 Patch0013:  0013-Add-create-dir-service-for-neutron-ovs-agent.patch
 Patch0014:  0014-Add-missing-x.patch
-Patch0015:  0015-Move-99-neutronclient-under-neutron-source-install.patch
 
 BuildArch: noarch
 BuildRequires: python
@@ -38,7 +37,7 @@ diskimage-builder that can be used to build OpenStack images for the TripleO
 program.
 
 %prep
-%setup -q -n tripleo-image-elements-0.0.1.dev148.ga84a463
+%setup -q -n tripleo-image-elements-%{version}
 
 %patch0001 -p1
 %patch0002 -p1
@@ -54,7 +53,6 @@ program.
 %patch0012 -p1
 %patch0013 -p1
 %patch0014 -p1
-%patch0015 -p1
 
 %build
 %{__python} setup.py build
@@ -72,7 +70,6 @@ chmod +x %{buildroot}/%{_datarootdir}/tripleo-image-elements/neutron-dhcp-agent/
 chmod +x %{buildroot}/%{_datarootdir}/tripleo-image-elements/neutron-server/install.d/neutron-package-install/76-neutron
 chmod +x %{buildroot}/%{_datarootdir}/tripleo-image-elements/fedora-rdo-icehouse/pre-install.d/10-rdo-icehouse-repo
 chmod +x %{buildroot}/%{_datarootdir}/tripleo-image-elements/cinder/install.d/73-cinder
-chmod +x %{buildroot}/%{_datarootdir}/tripleo-image-elements/neutron/install.d/neutron-source-install/99-neutronclient
 
 %files
 %doc LICENSE
@@ -83,5 +80,8 @@ chmod +x %{buildroot}/%{_datarootdir}/tripleo-image-elements/neutron/install.d/n
 %{_datadir}/tripleo-image-elements
 
 %changelog
+* Thu Feb 20 2014 James Slagle <jslagle@redhat.com> - 0.6.0-1
+- Update to 0.6.0 upstream release.
+
 * Mon Feb 17 2014 James Slagle <jslagle@redhat.com> - 0.5.1-1
 - Initial rpm build.
