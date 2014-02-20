@@ -5,18 +5,20 @@ Release:	1%{?dist}
 License:	ASL 2.0
 Group:		System Environment/Base
 URL:		https://wiki.openstack.org/wiki/TripleO
-Source0:    http://tarballs.openstack.org/tripleo-heat-templates/tripleo-heat-templates-%{version}.tar.gz
+Source0:        http://tarballs.openstack.org/tripleo-heat-templates/tripleo-heat-templates-%{version}.tar.gz
 
-Patch0001:  0001-WaitConditionHandle.patch
+# Roll back the switch to use OS::Heat::UpdateWaitConditionHandle, since RDO
+# openstack-heat does not yet have that functionality.
+Patch0001:      0001-WaitConditionHandle.patch
 
-BuildArch: noarch
-BuildRequires: python
-BuildRequires: python2-devel
-BuildRequires: python-setuptools
-BuildRequires: python-d2to1
-BuildRequires: python-pbr
+BuildArch:      noarch
+BuildRequires:  python
+BuildRequires:  python2-devel
+BuildRequires:  python-setuptools
+BuildRequires:  python-d2to1
+BuildRequires:  python-pbr
 
-Requires: PyYAML
+Requires:       PyYAML
 
 %description
 OpenStack TripleO Heat Templates is a collection of templates and tools for
