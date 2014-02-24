@@ -1,6 +1,6 @@
-%global commit 45a841bbdab1cfeab839c19cf4a247a2d325a905
+%global commit c53c2636ab4909a7251737e6ff4ec2abd51dc1e6
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
-%global alphatag 20140219git
+%global alphatag 20140224
 
 Name:		instack-undercloud
 Version:	0.0.1
@@ -55,6 +55,9 @@ cp -ar json-files %{buildroot}/%{_datarootdir}/instack-undercloud
 
 
 %changelog
+* Mon Feb 24 2014 James Slagle <jslagle@redhat.com> 0.0.1-0.1.20140224git
+- Update install-undercloud-packages to account for new element location
+
 * Mon Feb 24 2014 James Slagle <jslagle@redhat.com> 0.0.1-0.1.20140219git
 - Use alphatag macro for the release.
 - Update path where elements are installed.
