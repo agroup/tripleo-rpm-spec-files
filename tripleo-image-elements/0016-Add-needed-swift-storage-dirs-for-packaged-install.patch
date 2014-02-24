@@ -1,0 +1,42 @@
+From d46a0a82626eb76b0aaafebbecc04a9ed729fad8 Mon Sep 17 00:00:00 2001
+From: James Slagle <jslagle@redhat.com>
+Date: Fri, 31 Jan 2014 12:23:44 -0500
+Subject: [PATCH 02/36] Add needed swift storage dirs for packaged install
+
+These directories are needed by both the packaged and source installs,
+so do their creation into a common install.d script instead.
+
+Change-Id: I7a05030015d17cf33f7fa231a199d78dc9e86b0b
+---
+ elements/swift-storage/install.d/76-swift-dirs                       | 5 +++++
+ .../swift-storage/install.d/swift-source-install/76-swift-storage    | 2 --
+ 2 files changed, 5 insertions(+), 2 deletions(-)
+ create mode 100755 elements/swift-storage/install.d/76-swift-dirs
+
+diff --git a/elements/swift-storage/install.d/76-swift-dirs b/elements/swift-storage/install.d/76-swift-dirs
+new file mode 100755
+index 0000000..1696b5d
+--- /dev/null
++++ b/elements/swift-storage/install.d/76-swift-dirs
+@@ -0,0 +1,5 @@
++#!/bin/bash
++
++set -eux
++
++install -d -o swift -g swift /srv/node /var/cache/swift
+diff --git a/elements/swift-storage/install.d/swift-source-install/76-swift-storage b/elements/swift-storage/install.d/swift-source-install/76-swift-storage
+index 56f9419..892a5bf 100755
+--- a/elements/swift-storage/install.d/swift-source-install/76-swift-storage
++++ b/elements/swift-storage/install.d/swift-source-install/76-swift-storage
+@@ -2,8 +2,6 @@
+ 
+ set -eux
+ 
+-install -d -o swift -g swift /srv/node /var/cache/swift
+-
+ os-svc-daemon swift-account swift swift-account-server /etc/swift/account-server.conf
+ os-svc-daemon swift-container swift swift-container-server /etc/swift/container-server.conf
+ os-svc-daemon swift-object swift swift-object-server /etc/swift/object-server.conf
+-- 
+1.8.5.3
+
