@@ -1,18 +1,18 @@
 %global commit 45a841bbdab1cfeab839c19cf4a247a2d325a905
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
-%global repo_name instack-undercloud
+%global alphatag 20140219git
 
 Name:		instack-undercloud
 Version:	0.0.1
-Release:	1%{?dist}
+Release:	0.1.%{alphatag}%{?dist}
 Summary:	Installation tools to install an undercloud via python-instack
 
 Group:		Development/Languages
 License:	ASL 2.0
 URL:		https://github.com/slagle/instack-undercloud
-Source0:        https://github.com/slagle/%{repo_name}/archive/%{commit}.tar.gz
+Source0:	https://github.com/slagle/%{name}/archive/%{commit}.tar.gz
 
-BuildArch:      noarch
+BuildArch:	noarch
 
 Requires:	python-instack
 
@@ -24,7 +24,7 @@ installation.
 
 
 %prep
-%setup -q -n %{repo_name}-%{commit}
+%setup -q -n %{name}-%{commit}
 
 
 %build
@@ -33,8 +33,8 @@ installation.
 
 %install
 # elements
-install -d -m 755 %{buildroot}/%{_datarootdir}/instack-undercloud
-cp -ar elements %{buildroot}/%{_datarootdir}/instack-undercloud
+install -d -m 755 %{buildroot}/%{_datadir}/%{name}
+cp -ar elements/* %{buildroot}/%{_datadir}/%{name}
 # scripts
 install -d -m 755 %{buildroot}/%{_bindir}
 cp -ar scripts/* %{buildroot}/%{_bindir}
@@ -55,5 +55,9 @@ cp -ar json-files %{buildroot}/%{_datarootdir}/instack-undercloud
 
 
 %changelog
-* Tue Feb 18 2014 James Slagle <jslagle@redhat.com>
+* Mon Feb 24 2014 James Slagle <jslagle@redhat.com> 0.0.1-0.1.20140219git
+- Use alphatag macro for the release.
+- Update path where elements are installed.
+
+* Tue Feb 18 2014 James Slagle <jslagle@redhat.com> 0.0.1-0.1
 - Initial rpm build.
