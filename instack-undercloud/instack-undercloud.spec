@@ -1,6 +1,6 @@
-%global commit c53c2636ab4909a7251737e6ff4ec2abd51dc1e6
+%global commit ec0be12f0c78b5d91040d735ba18091b74b3a716
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
-%global alphatag 20140224
+%global alphatag 20140226
 
 Name:		instack-undercloud
 Version:	0.0.1
@@ -50,11 +50,15 @@ cp -ar json-files %{buildroot}/%{_datarootdir}/instack-undercloud
 %{_datarootdir}/instack-undercloud
 %{_bindir}/install-undercloud
 %{_bindir}/install-undercloud-packages
+%{_bindir}/prepare-for-overcloud
 %{_bindir}/deploy-overcloud
-%{_bindir}/overcloud
+%{_bindir}/test-overcloud
 
 
 %changelog
+* Wed Feb 26 2014 James Slagle <jslagle@redhat.com> 0.0.1-0.1.20140226git
+- Add scripts for prepare-for-overcloud and test-overcloud
+
 * Mon Feb 24 2014 James Slagle <jslagle@redhat.com> 0.0.1-0.1.20140224git
 - Update install-undercloud-packages to account for new element location
 
