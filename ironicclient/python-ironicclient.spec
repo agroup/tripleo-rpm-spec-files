@@ -1,6 +1,12 @@
+%if 0%{?rhel} && 0%{?rhel} <= 6
+%{!?__python2: %global __python2 /usr/bin/python2}
+%{!?python2_sitelib: %global python2_sitelib %(%{__python2} -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())")}
+%{!?python2_sitearch: %global python2_sitearch %(%{__python2} -c "from distutils.sysconfig import get_python_lib; print(get_python_lib(1))")}
+%endif
+
 Name:           python-ironicclient
 Version:        0.1.2
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Python client for Ironic
 
 License:        ASL 2.0
@@ -49,6 +55,9 @@ A python and command line client library for Ironic.
 
 
 %changelog
+
+* Thu Feb 27 2014 Angus Thomas <athomas@redhat.com> - 0.1.2-3
+- Added macro fix to support building on EL6
 
 * Wed Feb 26 2014 Angus Thomas <athomas@redhat.com> - 0.1.2-2
 - Added patches to remove pbr dependency
