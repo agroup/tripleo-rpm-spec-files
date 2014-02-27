@@ -1,0 +1,28 @@
+diff -urN ../python-ironicclient-0.1.2.orig/0001-Remove-runtime-dependency-on-python-pbr.patch ./0001-Remove-runtime-dependency-on-python-pbr.patch
+--- ../python-ironicclient-0.1.2.orig/0001-Remove-runtime-dependency-on-python-pbr.patch	1970-01-01 01:00:00.000000000 +0100
++++ ./0001-Remove-runtime-dependency-on-python-pbr.patch	2014-02-27 11:20:02.400310394 +0000
+@@ -0,0 +1,12 @@
++diff -urN ../python-ironicclient-0.1.2.orig/ironicclient/__init__.py ./ironicclient/__init__.py
++--- ../python-ironicclient-0.1.2.orig/ironicclient/__init__.py	2014-02-25 03:14:21.000000000 +0000
+++++ ./ironicclient/__init__.py	2014-02-27 11:16:32.014272954 +0000
++@@ -13,7 +13,4 @@
++ # License for the specific language governing permissions and limitations
++ # under the License.
++ 
++-import pbr.version
++-
++-
++-__version__ = pbr.version.VersionInfo('python-ironicclient').version_string()
+++__version__ = "REDHATIRONICCLIENTVERSION"
+diff -urN ../python-ironicclient-0.1.2.orig/ironicclient/__init__.py ./ironicclient/__init__.py
+--- ../python-ironicclient-0.1.2.orig/ironicclient/__init__.py	2014-02-25 03:14:21.000000000 +0000
++++ ./ironicclient/__init__.py	2014-02-27 11:16:32.014272954 +0000
+@@ -13,7 +13,4 @@
+ # License for the specific language governing permissions and limitations
+ # under the License.
+ 
+-import pbr.version
+-
+-
+-__version__ = pbr.version.VersionInfo('python-ironicclient').version_string()
++__version__ = "REDHATIRONICCLIENTVERSION"

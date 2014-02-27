@@ -1,16 +1,20 @@
 Name:           python-ironicclient
 Version:        0.1.2
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Python client for Ironic
 
 License:        ASL 2.0
 URL:            https://pypi.python.org/pypi/python-ironicclient
-Source0:        https://pypi.python.org/packages/source/p/python-ironicclient/python-ironicclient-0.1.2.tar.gz
+Source0:        http://tarballs.openstack.org/python-ironicclient/python-ironicclient-0.1.2.tar.gz
+
+Patch0001:	0001-ironicclient-Remove-runtime-dependency-on-python-pbr.patch
+Patch0002:	0002-ironicclient-Prevent-pbr-dependencies-handling.patch
 
 BuildArch:      noarch
 
 BuildRequires:  python2-devel
 BuildRequires:  python-pbr
+BuildRequires:  python-setuptools
 
 Requires:       python-prettytable
 Requires:       python-keystoneclient
@@ -26,13 +30,8 @@ A python and command line client library for Ironic.
 %prep
 %setup -q -n %{name}-%{version}
 
-rm -rf python_ironicclient.egg-info
-# Let RPM handle deps
-sed -i '/setup_requires/d; /install_requires/d; /dependency_links/d' setup.py
-
-# Remove the requirements file so that pbr hooks don't add it
-# to distutils requires_dist config
-rm -rf {test-,}requirements.txt
+%patch0001 -p1
+%patch0002 -p1
 
 
 %build
@@ -40,16 +39,21 @@ rm -rf {test-,}requirements.txt
 
 %install
 %{__python2} setup.py install --skip-build --root %{buildroot}
-rm -rf %{buildroot}%{python2_sitelib}/python_ironicclient*
 
 
 %files
 %{_bindir}/*
 %{python2_sitelib}/ironicclient*
+%{python2_sitelib}/python_ironicclient*
 %doc LICENSE README.rst
 
 
 %changelog
+
+* Wed Feb 26 2014 Angus Thomas <athomas@redhat.com> - 0.1.2-2
+- Added patches to remove pbr dependency
+- Updated the source URL
+- Removed deletion of python_ironicclient.egg-info
 
 * Tue Feb 25 2014 Angus Thomas <athomas@redhat.com> - 0.1.2-1
 - Initial package.
