@@ -1,0 +1,25 @@
+From 32bb49f49549b2d6e0058bee5b06d7651515fbc7 Mon Sep 17 00:00:00 2001
+From: Angus Thomas <athomas@redhat.com>
+Date: Thu, 27 Feb 2014 17:57:09 +0000
+Subject: [PATCH] Default DB location
+
+---
+ etc/ironic/ironic.conf.sample | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/etc/ironic/ironic.conf.sample b/etc/ironic/ironic.conf.sample
+index 1480e06..f7bc5a0 100644
+--- a/etc/ironic/ironic.conf.sample
++++ b/etc/ironic/ironic.conf.sample
+@@ -523,7 +523,7 @@
+ # Deprecated group/name - [DEFAULT]/sql_connection
+ # Deprecated group/name - [DATABASE]/sql_connection
+ # Deprecated group/name - [sql]/connection
+-#connection=sqlite:////ironic/openstack/common/db/$sqlite_db
++connection=sqlite:////var/lib/ironic/$sqlite_db
+ 
+ # The SQLAlchemy connection string used to connect to the
+ # slave database (string value)
+-- 
+1.8.5.3
+
