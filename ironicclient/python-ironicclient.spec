@@ -6,7 +6,7 @@
 
 Name:           python-ironicclient
 Version:        0.1.2
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        Python client for Ironic
 
 License:        ASL 2.0
@@ -39,6 +39,8 @@ A python and command line client library for Ironic.
 %patch0001 -p1
 %patch0002 -p1
 
+# We provide version like this in order to remove runtime dep on pbr.
+sed -i s/REDHATIRONICCLIENTVERSION/%{version}/ ironicclient/__init__.py
 
 %build
 %{__python2} setup.py build
@@ -48,13 +50,18 @@ A python and command line client library for Ironic.
 
 
 %files
+%doc LICENSE README.rst
 %{_bindir}/*
 %{python2_sitelib}/ironicclient*
 %{python2_sitelib}/python_ironicclient*
-%doc LICENSE README.rst
 
 
 %changelog
+
+* Thu Feb 27 2014 Angus Thomas <athomas@redhat.com> - 0.1.2-4
+- Switched to patches made with git
+- Write REDHATIRONICCLIENTVERSION correctly
+- Reordered %files
 
 * Thu Feb 27 2014 Angus Thomas <athomas@redhat.com> - 0.1.2-3
 - Added macro fix to support building on EL6

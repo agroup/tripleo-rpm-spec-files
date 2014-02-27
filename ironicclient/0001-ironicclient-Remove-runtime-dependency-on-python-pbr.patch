@@ -1,22 +1,16 @@
-diff -urN ../python-ironicclient-0.1.2.orig/0001-Remove-runtime-dependency-on-python-pbr.patch ./0001-Remove-runtime-dependency-on-python-pbr.patch
---- ../python-ironicclient-0.1.2.orig/0001-Remove-runtime-dependency-on-python-pbr.patch	1970-01-01 01:00:00.000000000 +0100
-+++ ./0001-Remove-runtime-dependency-on-python-pbr.patch	2014-02-27 11:20:02.400310394 +0000
-@@ -0,0 +1,12 @@
-+diff -urN ../python-ironicclient-0.1.2.orig/ironicclient/__init__.py ./ironicclient/__init__.py
-+--- ../python-ironicclient-0.1.2.orig/ironicclient/__init__.py	2014-02-25 03:14:21.000000000 +0000
-++++ ./ironicclient/__init__.py	2014-02-27 11:16:32.014272954 +0000
-+@@ -13,7 +13,4 @@
-+ # License for the specific language governing permissions and limitations
-+ # under the License.
-+ 
-+-import pbr.version
-+-
-+-
-+-__version__ = pbr.version.VersionInfo('python-ironicclient').version_string()
-++__version__ = "REDHATIRONICCLIENTVERSION"
-diff -urN ../python-ironicclient-0.1.2.orig/ironicclient/__init__.py ./ironicclient/__init__.py
---- ../python-ironicclient-0.1.2.orig/ironicclient/__init__.py	2014-02-25 03:14:21.000000000 +0000
-+++ ./ironicclient/__init__.py	2014-02-27 11:16:32.014272954 +0000
+From 628694a030ea37bb80b2e31dd2d0494c3f0c1989 Mon Sep 17 00:00:00 2001
+From: Angus Thomas <athomas@redhat.com>
+Date: Thu, 27 Feb 2014 16:49:05 +0000
+Subject: [PATCH] Remove runtime dependency on python pbr
+
+---
+ ironicclient/__init__.py | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
+
+diff --git a/ironicclient/__init__.py b/ironicclient/__init__.py
+index 4aa915f..2c4fe3d 100644
+--- a/ironicclient/__init__.py
++++ b/ironicclient/__init__.py
 @@ -13,7 +13,4 @@
  # License for the specific language governing permissions and limitations
  # under the License.
@@ -26,3 +20,6 @@ diff -urN ../python-ironicclient-0.1.2.orig/ironicclient/__init__.py ./ironiccli
 -
 -__version__ = pbr.version.VersionInfo('python-ironicclient').version_string()
 +__version__ = "REDHATIRONICCLIENTVERSION"
+-- 
+1.8.5.3
+
