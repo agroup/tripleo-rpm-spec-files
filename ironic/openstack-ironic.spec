@@ -118,7 +118,7 @@ exit 0
 
 %changelog
 
-* Thu Feb 27 2014 Angus Thomas <athomas@redhat.com> - 2014.3-b2.2
+* Thu Feb 27 2014 Angus Thomas <athomas@redhat.com> - 2014.1-b2.3
 - Added dependency on python-pyghmi
 - Patch to remove pbr build dependency
 - Fixed python2-devel build dependency
@@ -128,7 +128,7 @@ exit 0
 - Removed unnecessary Requires & BuildRequires
 
 
-* Mon Feb 24 2014 Angus Thomas <athomas@redhat.com> - 2014.2-b2.2
+* Mon Feb 24 2014 Angus Thomas <athomas@redhat.com> - 2014.1-b2.2
 - Removed /var/log/ironic from package
 - Replaced hardcoded file paths with macros
 - Added LICENSE and README.rst docs
