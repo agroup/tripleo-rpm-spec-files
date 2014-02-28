@@ -13,7 +13,7 @@
 Name:		openstack-ironic
 Summary:	OpenStack Baremetal Hypervisor API (ironic)
 Version:	2014.1
-Release:	%{release_letter}%{milestone}.3%{?dist}
+Release:	%{release_letter}%{milestone}.4%{?dist}
 License:	ASL 2.0
 Group:		System Environment/Base
 URL:		http://www.openstack.org
@@ -28,6 +28,7 @@ Patch0002:	0002-ironic-Default-DB-location.patch
 BuildArch:	noarch
 BuildRequires:	python-setuptools
 BuildRequires:	python2-devel
+BuildRequires:	python-pbr
 BuildRequires:	openssl-devel
 BuildRequires:	libxml2-devel
 BuildRequires:	libxslt-devel
@@ -117,6 +118,9 @@ exit 0
 
 
 %changelog
+
+* Fri Feb 28 2014 Angus Thomas <athomas@redhat.com> - 2014.1-b2.4
+- Restored BuildRequires: python-pbr 
 
 * Thu Feb 27 2014 Angus Thomas <athomas@redhat.com> - 2014.1-b2.3
 - Added dependency on python-pyghmi
