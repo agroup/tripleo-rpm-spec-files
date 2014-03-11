@@ -1,28 +1,31 @@
 Name:		openstack-tripleo-image-elements
 Summary:	OpenStack TripleO Image Elements for diskimage-builder
-Version:        0.6.0
-Release:        2%{?dist}
+Version:	0.6.2
+Release:	1%{?dist}
 License:	ASL 2.0
 Group:		System Environment/Base
 URL:		https://wiki.openstack.org/wiki/TripleO
-Source0:        http://tarballs.openstack.org/tripleo-image-elements/tripleo-image-elements-%{version}.tar.gz
+Source0:	http://tarballs.openstack.org/tripleo-image-elements/tripleo-image-elements-%{version}.tar.gz
 
-Patch0001:      0001-Ability-to-add-create-dir-service-separately.patch
-Patch0002:      0002-Add-create-dir-service-for-neutron.patch
-Patch0003:      0003-Add-create-dir-service-for-nova.patch
-Patch0004:      0004-Fix-neutron-package-install.patch
-Patch0005:      0005-Correct-owner-for-glance-api-log-file.patch
-Patch0006:      0006-Fix-glance-package-install-config.patch
-Patch0007:      0007-Add-fedora-rdo-icehouse-element.patch
-Patch0008:      0008-Fix-typo.patch
-Patch0009:      0009-Install-lvm2-package-for-cinder.patch
-Patch0010:      0010-Common-cinder-install-code.patch
-Patch0011:      0011-Use-os-svc-restart-for-cinder-api.patch
-Patch0012:      0012-Remove-unneeded-chown-of-var-run-nova.patch
-Patch0013:      0013-Add-create-dir-service-for-neutron-ovs-agent.patch
-Patch0014:      0014-Add-missing-x.patch
-Patch0015:      0015-Install-openstack-swift-object.patch
-Patch0016:      0016-Add-needed-swift-storage-dirs-for-packaged-install.patch
+# These have merged to master in tripleo-image-elements, but we don't yet have
+# a rease for them.
+# git format-patch c38c247e53b7812cfab5a36b26ddbc1a880d4df6^1...319c0a66fcb4113dec8a87247e338130573f36ae
+Patch0001:      0001-Common-cinder-install-code.patch
+Patch0002:      0002-Use-os-svc-restart-for-cinder-api.patch
+Patch0003:      0003-Remove-unneeded-chown-of-var-run-nova.patch
+Patch0004:      0004-Add-create-dir-service-for-neutron-ovs-agent.patch
+Patch0005:      0005-Add-missing-x.patch
+# git format-patch -1 4eccc8cc10eb7ae0ae9d24f7d5d02be4c05b0881
+Patch0006:	0006-Make-log_file-and-notifier_strategy-configurable.patch
+
+# The next 3 reviews have not merged upstream yet, but we need them.
+# git review -d 76579 
+# git format-patch -1 1105e565a0917feada1a7e74bf5fe49d8fb3a161
+Patch0007:	0007-Work-around-missing-kombu-requirement-for-keystone.patch
+# git format-patch -1 bddd2908b3f9758a8c6be9594599200101f5d7bb
+Patch0008:	0008-Stop-using-the-os-svc-install-n-c-options.patch
+# git format-patch -1 bddd2908b3f9758a8c6be9594599200101f5d7bb
+Patch0009:	0009-Link-db-sync-utilities-to-usr-local-bin.patch
 
 BuildArch:      noarch
 BuildRequires:  python
@@ -50,13 +53,6 @@ program.
 %patch0007 -p1
 %patch0008 -p1
 %patch0009 -p1
-%patch0010 -p1
-%patch0011 -p1
-%patch0012 -p1
-%patch0013 -p1
-%patch0014 -p1
-%patch0015 -p1
-%patch0016 -p1
 
 %build
 %{__python} setup.py build
@@ -85,6 +81,11 @@ chmod +x %{buildroot}/%{_datarootdir}/tripleo-image-elements/swift-storage/insta
 %{_datadir}/tripleo-image-elements
 
 %changelog
+* Tue Mar 11 2014 James Slagle <jslagle@redhat.com> - 0.6.2-1
+* Bump to 0.6.2
+- Remove some patchs that have merged upstream
+- Spec file updates based on review
+
 * Mon Feb 24 2014 James Slagle <jslagle@redhat.com> - 0.6.0-2
 * Add patches for swift package support.
 

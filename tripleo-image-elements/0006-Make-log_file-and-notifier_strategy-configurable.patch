@@ -1,0 +1,70 @@
+From 4eccc8cc10eb7ae0ae9d24f7d5d02be4c05b0881 Mon Sep 17 00:00:00 2001
+From: James Slagle <jslagle@redhat.com>
+Date: Tue, 25 Feb 2014 09:47:38 -0500
+Subject: [PATCH] Make log_file and notifier_strategy configurable
+
+This makes log_file and notifier_strategy configurable in
+/etc/glance/glance-api.conf and /etc/glance/glance-registry.conf.
+
+There is corresponding change to tripleo-heat-templates to expose these
+configurations in the heat templates at:
+https://review.openstack.org/#/c/76652/
+
+Change-Id: I0591f861fe292df4373839fc675481d2fa4fa5fc
+---
+ elements/glance/README.md                                        | 5 +++++
+ elements/glance/os-config-applier/etc/glance/glance-api.conf     | 9 +++++++++
+ .../glance/os-config-applier/etc/glance/glance-registry.conf     | 4 ++++
+ 3 files changed, 18 insertions(+)
+
+diff --git a/elements/glance/README.md b/elements/glance/README.md
+index c3e0e44..3c9afde 100644
+--- a/elements/glance/README.md
++++ b/elements/glance/README.md
+@@ -18,3 +18,8 @@ glance:
+       - The credentials to use against swift if using the swift backend.
+     api-workers: 1
+       - The number of Glance API server processes to start.
++    notifier-strategy: noop
++      - Strategy to use for notification queue.
++    log-file: ''
++      - The filepath of the file to use for logging messages from Glance’s servers.
++      - The default is unset, which implies stdout.
+diff --git a/elements/glance/os-config-applier/etc/glance/glance-api.conf b/elements/glance/os-config-applier/etc/glance/glance-api.conf
+index 3fb5204..a8772ae 100644
+--- a/elements/glance/os-config-applier/etc/glance/glance-api.conf
++++ b/elements/glance/os-config-applier/etc/glance/glance-api.conf
+@@ -16,6 +16,15 @@ debug = {{glance.debug}}
+ 
+ default_store = {{glance.backend}}
+ 
++# Strategy to use for Glance notification queue
++{{#glance.notifier-strategy}}
++notifier_strategy = {{glance.notifer-strategy}}
++{{/glance.notifier-strategy}}
++
++{{#glance.log-file}}
++log_file = {{glance.log-file}}
++{{/glance.log-file}}
++
+ bind_host = 0.0.0.0
+ bind_port = 9292
+ 
+diff --git a/elements/glance/os-config-applier/etc/glance/glance-registry.conf b/elements/glance/os-config-applier/etc/glance/glance-registry.conf
+index 2bed31b..63a86c7 100644
+--- a/elements/glance/os-config-applier/etc/glance/glance-registry.conf
++++ b/elements/glance/os-config-applier/etc/glance/glance-registry.conf
+@@ -14,6 +14,10 @@ verbose = {{glance.verbose}}
+ debug = {{glance.debug}}
+ {{/glance.debug}}
+ 
++{{#glance.log-file}}
++log_file = {{glance.log-file}}
++{{/glance.log-file}}
++
+ bind_host = 0.0.0.0
+ bind_port = 9191
+ 
+-- 
+1.8.5.3
+

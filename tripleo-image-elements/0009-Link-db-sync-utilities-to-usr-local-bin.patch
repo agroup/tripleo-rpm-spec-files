@@ -1,0 +1,115 @@
+From bddd2908b3f9758a8c6be9594599200101f5d7bb Mon Sep 17 00:00:00 2001
+From: Dan Prince <dprince@redhat.com>
+Date: Wed, 26 Feb 2014 11:37:38 -0500
+Subject: [PATCH] Link db sync utilities to /usr/local/bin...
+
+Updates the ceilometer, ironic, neutron, and tuskar elements
+so that we soft link the DB sync utilities into /usr/local/bin.
+
+This allows us to refactor the reset-db script to avoid hard
+coding the /opt/stack/venv binary patch which is used for
+source installs.
+
+This is cleaner and makes things consistent. It also makes
+the source installs consistent with how most distro packages
+work (thus making reset-db useful with packages as well).
+
+Change-Id: Ib8c36811230512e4283f3f960254b2c37e699f46
+---
+ elements/boot-stack/bin/reset-db                          | 15 +++++++--------
+ elements/ceilometer/install.d/68-ceilometer               |  2 ++
+ elements/ironic/install.d/68-ironic                       |  2 ++
+ .../neutron/install.d/neutron-source-install/76-neutron   |  2 ++
+ elements/tuskar/install.d/100-tuskar-api                  |  2 ++
+ 5 files changed, 15 insertions(+), 8 deletions(-)
+
+diff --git a/elements/boot-stack/bin/reset-db b/elements/boot-stack/bin/reset-db
+index c3ef26a..9f3861e 100755
+--- a/elements/boot-stack/bin/reset-db
++++ b/elements/boot-stack/bin/reset-db
+@@ -26,7 +26,6 @@ fi
+ service mysql restart || service mysqld restart
+ 
+ PATH=/usr/local/bin:$PATH
+-venvs=/opt/stack/venvs
+ 
+ os-db-create keystone keystone $db_pass
+ run_db_sync && keystone-manage db_sync
+@@ -36,19 +35,19 @@ if which cinder-manage 1>/dev/null 2>&1; then
+     run_db_sync && cinder-manage db sync
+ fi
+ 
+-if [ -x "$venvs/ironic/bin/ironic-dbsync" ] ; then
++if which ironic-dbsync 1>/dev/null 2>&1; then
+     os-db-create ironic ironic $db_pass
+-    run_db_sync && $venvs/ironic/bin/ironic-dbsync --config-file /etc/ironic/ironic.conf
++    run_db_sync && ironic-dbsync --config-file /etc/ironic/ironic.conf
+ fi
+ 
+-if [ -x "$venvs/tuskar/bin/tuskar-dbsync" ] ; then
++if which tuskar-dbsync 1>/dev/null 2>&1; then
+     os-db-create tuskar tuskar $db_pass
+-    run_db_sync && $venvs/tuskar/bin/tuskar-dbsync --config-file /etc/tuskar/tuskar.conf
++    run_db_sync && tuskar-dbsync --config-file /etc/tuskar/tuskar.conf
+ fi
+ 
+-if [ -x "$venvs/ceilometer/bin/ceilometer-dbsync" ] ; then
++if which ceilometer-dbsync 1>/dev/null 2>&1; then
+     os-db-create ceilometer ceilometer $db_pass
+-    run_db_sync && $venvs/ceilometer/bin/ceilometer-dbsync --config-file /etc/ceilometer/ceilometer.conf
++    run_db_sync && ceilometer-dbsync --config-file /etc/ceilometer/ceilometer.conf
+ fi
+ 
+ os-db-create nova nova $db_pass
+@@ -64,4 +63,4 @@ os-db-create heat heat $db_pass
+ run_db_sync && heat-manage db_sync
+ 
+ os-db-create ovs_neutron neutron $db_pass
+-/opt/stack/venvs/neutron/bin/neutron-db-manage --config-file /etc/neutron/neutron.conf --config-file /etc/neutron/plugins/ml2/ml2_conf.ini upgrade head
++neutron-db-manage --config-file /etc/neutron/neutron.conf --config-file /etc/neutron/plugins/ml2/ml2_conf.ini upgrade head
+diff --git a/elements/ceilometer/install.d/68-ceilometer b/elements/ceilometer/install.d/68-ceilometer
+index 3a23884..93bf03d 100755
+--- a/elements/ceilometer/install.d/68-ceilometer
++++ b/elements/ceilometer/install.d/68-ceilometer
+@@ -7,3 +7,5 @@ os-svc-install -u ceilometer -r /opt/stack/ceilometer
+ install -m 640 -o ceilometer -g ceilometer /opt/stack/ceilometer/etc/ceilometer/pipeline.yaml /etc/ceilometer
+ install -m 640 -o ceilometer -g ceilometer /opt/stack/ceilometer/etc/ceilometer/policy.json /etc/ceilometer
+ install -m 640 -o ceilometer -g ceilometer /opt/stack/ceilometer/etc/ceilometer/sources.json /etc/ceilometer
++
++ln -s /opt/stack/venvs/ceilometer/bin/ceilometer-dbsync /usr/local/bin/ceilometer-dbsync
+diff --git a/elements/ironic/install.d/68-ironic b/elements/ironic/install.d/68-ironic
+index 4c7741f..135fb60 100755
+--- a/elements/ironic/install.d/68-ironic
++++ b/elements/ironic/install.d/68-ironic
+@@ -7,3 +7,5 @@ install-packages libssl-dev
+ os-svc-install -u ironic -r /opt/stack/ironic
+ 
+ install -d -m 0750 -o ironic -g ironic /etc/ironic
++
++ln -s /opt/stack/venvs/ironic/bin/ironic-dbsync /usr/local/bin/ironic-dbsync
+diff --git a/elements/neutron/install.d/neutron-source-install/76-neutron b/elements/neutron/install.d/neutron-source-install/76-neutron
+index cb1eca0..0cf719f 100755
+--- a/elements/neutron/install.d/neutron-source-install/76-neutron
++++ b/elements/neutron/install.d/neutron-source-install/76-neutron
+@@ -16,6 +16,8 @@ ln -sf /opt/stack/venvs/neutron/etc/neutron/rootwrap.d /etc/neutron/rootwrap.d
+ cp /opt/stack/neutron/etc/api-paste.ini /etc/neutron/api-paste.ini
+ cp /opt/stack/neutron/etc/policy.json /etc/neutron/policy.json
+ 
++ln -s /opt/stack/venvs/neutron/bin/neutron-db-manage /usr/local/bin/neutron-db-manage
++
+ echo "neutron ALL=(root) NOPASSWD:ALL" > /etc/sudoers.d/neutron
+ echo "Defaults:neutron !requiretty" >> /etc/sudoers.d/neutron
+ chmod 0440 /etc/sudoers.d/neutron
+diff --git a/elements/tuskar/install.d/100-tuskar-api b/elements/tuskar/install.d/100-tuskar-api
+index 329f0be..9d0e68a 100755
+--- a/elements/tuskar/install.d/100-tuskar-api
++++ b/elements/tuskar/install.d/100-tuskar-api
+@@ -9,3 +9,5 @@ cp -a /opt/stack/tuskar/etc/tuskar/policy.json /etc/tuskar
+ cp -a /opt/stack/tuskar/etc/tuskar/tripleo-heat-templates /etc/tuskar
+ 
+ os-svc-daemon tuskar-api tuskar tuskar-api "--config-dir /etc/tuskar"
++
++ln -s /opt/stack/venvs/tuskar/bin/tuskar-dbsync /usr/local/bin/tuskar-dbsync
+-- 
+1.8.5.3
+

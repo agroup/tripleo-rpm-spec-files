@@ -1,7 +1,7 @@
-From 88033ad64b3597f3cdc1b3c101b42076687e0c6a Mon Sep 17 00:00:00 2001
+From 319c0a66fcb4113dec8a87247e338130573f36ae Mon Sep 17 00:00:00 2001
 From: James Slagle <jslagle@redhat.com>
 Date: Tue, 18 Feb 2014 16:03:18 -0500
-Subject: [PATCH 14/14] Add missing +x
+Subject: [PATCH 5/5] Add missing +x
 
 Without +x, this script will never get run by dib-run-parts.
 

@@ -1,0 +1,31 @@
+From 1105e565a0917feada1a7e74bf5fe49d8fb3a161 Mon Sep 17 00:00:00 2001
+From: Clint Byrum <clint@fewbar.com>
+Date: Wed, 5 Mar 2014 13:42:55 -0800
+Subject: [PATCH] Work around missing kombu requirement for keystone
+
+Keystone has switched to oslo.messaging and thus is missing a
+requirement for the backend drivers.
+
+We only use kombu, so we can force it in until oslo.messaging is fixed.
+
+Change-Id: I2ffb6683f51c70d67da043a4907ba84330e75b9f
+Closes-Bug: #1288425
+---
+ elements/keystone/install.d/keystone-source-install/05-keystone | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/elements/keystone/install.d/keystone-source-install/05-keystone b/elements/keystone/install.d/keystone-source-install/05-keystone
+index 011a40d..4114a37 100755
+--- a/elements/keystone/install.d/keystone-source-install/05-keystone
++++ b/elements/keystone/install.d/keystone-source-install/05-keystone
+@@ -1,3 +1,7 @@
+ #!/bin/bash
+ set -eux
+ os-svc-install -n keystone -u keystone -r /opt/stack/keystone -c "/opt/stack/keystone/bin/keystone-all"
++
++# Workaround for https://bugs.launchpad.net/tripleo/+bug/1288425
++/opt/stack/venvs/keystone/bin/pip install -U kombu
++/opt/stack/venvs/keystone/bin/pip install -U qpid-python
+-- 
+1.8.5.3
+

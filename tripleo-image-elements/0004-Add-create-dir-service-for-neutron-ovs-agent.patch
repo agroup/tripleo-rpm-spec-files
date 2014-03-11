@@ -1,7 +1,7 @@
-From 566d60ad703852b40f13c810063fb365f95620d4 Mon Sep 17 00:00:00 2001
+From f2c509016503f07b6710ba70770bec26609b9ca2 Mon Sep 17 00:00:00 2001
 From: James Slagle <jslagle@redhat.com>
 Date: Fri, 14 Feb 2014 11:16:47 -0500
-Subject: [PATCH 13/14] Add create-dir service for neutron ovs agent
+Subject: [PATCH 4/5] Add create-dir service for neutron ovs agent
 
 The service will ensure /var/run/neutron is created and neutron owned,
 which is required by the neutron-openvswitch-agent daemon.

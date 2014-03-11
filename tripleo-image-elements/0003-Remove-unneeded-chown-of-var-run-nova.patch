@@ -1,7 +1,7 @@
-From 82d54ee87ba5ceed4000d4c86e042dbbe4c6e0e4 Mon Sep 17 00:00:00 2001
+From f57eb11882d398bfe2934eda0e74270b126bbe26 Mon Sep 17 00:00:00 2001
 From: James Slagle <jslagle@redhat.com>
 Date: Thu, 13 Feb 2014 17:56:46 -0500
-Subject: [PATCH 12/14] Remove unneeded chown of /var/run/nova
+Subject: [PATCH 3/5] Remove unneeded chown of /var/run/nova
 
 Both upstart and systemd daemons are defined to create their own run
 directories, and set the correct owners (see os-svc-daemon), so this
