@@ -1,0 +1,19 @@
+From b13d01ec4bbac3e4b5e72b007cd3caa32b212d37 Mon Sep 17 00:00:00 2001
+From: James Slagle <jslagle@redhat.com>
+Date: Tue, 18 Feb 2014 13:55:00 -0500
+Subject: [PATCH] Add missing +x
+
+This file should be +x, or it will never get run.
+
+Change-Id: I689cd98f2483f0fea67b86987abd37bc98fcae37
+---
+ .../os-refresh-config/pre-configure.d/70-stunnel-permissions              | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ mode change 100644 => 100755 elements/openstack-ssl/os-refresh-config/pre-configure.d/70-stunnel-permissions
+
+diff --git a/elements/openstack-ssl/os-refresh-config/pre-configure.d/70-stunnel-permissions b/elements/openstack-ssl/os-refresh-config/pre-configure.d/70-stunnel-permissions
+old mode 100644
+new mode 100755
+-- 
+1.8.5.3
+
