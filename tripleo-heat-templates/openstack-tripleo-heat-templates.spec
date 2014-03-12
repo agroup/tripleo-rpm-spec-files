@@ -1,24 +1,23 @@
 Name:		openstack-tripleo-heat-templates
 Summary:	Heat templates for TripleO
 Version:	0.4.0
-Release:	1%{?dist}
+Release:	2%{?dist}
 License:	ASL 2.0
 Group:		System Environment/Base
 URL:		https://wiki.openstack.org/wiki/TripleO
-Source0:        http://tarballs.openstack.org/tripleo-heat-templates/tripleo-heat-templates-%{version}.tar.gz
+Source0:	http://tarballs.openstack.org/tripleo-heat-templates/tripleo-heat-templates-%{version}.tar.gz
 
 # Roll back the switch to use OS::Heat::UpdateWaitConditionHandle, since RDO
 # openstack-heat does not yet have that functionality.
-Patch0001:      0001-WaitConditionHandle.patch
+Patch0001:	0001-WaitConditionHandle.patch
 
-BuildArch:      noarch
-BuildRequires:  python
-BuildRequires:  python2-devel
-BuildRequires:  python-setuptools
-BuildRequires:  python-d2to1
-BuildRequires:  python-pbr
+BuildArch:	noarch
+BuildRequires:	python2-devel
+BuildRequires:	python-setuptools
+BuildRequires:	python-d2to1
+BuildRequires:	python-pbr
 
-Requires:       PyYAML
+Requires:	PyYAML
 
 %description
 OpenStack TripleO Heat Templates is a collection of templates and tools for
@@ -30,27 +29,28 @@ building Heat Templates to do deployments of OpenStack.
 %patch0001 -p1
 
 %build
-%{__python} setup.py build
+%{__python2} setup.py build
 
 %install
-%{__python} setup.py install -O1 --skip-build --root=%{buildroot}
-install -d -m 755 %{buildroot}/%{_datadir}/tripleo-heat-templates
-cp -ar *.yaml %{buildroot}/%{_datadir}/tripleo-heat-templates
-
-install -d -m 755 %{buildroot}/%{_datarootdir}/doc/tripleo-heat-templates 
-cp -ar examples %{buildroot}/%{_datarootdir}/doc/tripleo-heat-templates
-cp README.md %{buildroot}/%{_datarootdir}/doc/tripleo-heat-templates
-cp LICENSE %{buildroot}/%{_datarootdir}/doc/tripleo-heat-templates
+%{__python2} setup.py install -O1 --skip-build --root=%{buildroot}
+install -d -m 755 %{buildroot}/%{_datadir}/%{name}
+cp -ar *.yaml %{buildroot}/%{_datadir}/%{name}
 
 %files
-%{python_sitelib}/tripleo_heat_merge
-%{python_sitelib}/tripleo_heat_templates-%{version}*.egg-info
-%{_datadir}/tripleo-heat-templates
+%doc README.md LICENSE examples
+%{python2_sitelib}/tripleo_heat_merge
+%{python2_sitelib}/tripleo_heat_templates-%{version}*.egg-info
+%{_datadir}/%{name}
 %{_bindir}/tripleo-heat-merge
 
-%doc %{_datarootdir}/doc/tripleo-heat-templates
-
 %changelog
+* Wed Mar 12 2014 James Slagle <jslagle@redhat.com> - 0.4.0-2
+- Remove python BuildRequires
+- Switch __python to __python2 macro
+- Switch python_sitelib to python2_sitelib macro
+- Use doc macro for README.md, LICENSE, and examples
+- Use name macro when copying templates in install
+
 * Mon Feb 17 2014 James Slagle <jslagle@redhat.com> - 0.4.0-1
 - Update spec file for Fedora Packaging 
 
