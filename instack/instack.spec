@@ -41,7 +41,7 @@ openstack-tripleo-image-elements.
 %{python2_sitelib}/*.egg-info
 
 %changelog
-* Wed Mar 11 2014 James Slagle <jslagle@redhat.com> 0.0.2-2
+* Wed Mar 12 2014 James Slagle <jslagle@redhat.com> 0.0.2-2
 - Switch __python to __python2 macro
 - Switch python_sitelib to python2_sitelib macro
 - 
