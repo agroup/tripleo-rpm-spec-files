@@ -1,0 +1,15 @@
+#!/bin/bash
+
+set -eu
+
+SCRIPT=${1:?"You must specify a tripleo script to execute"}
+
+shift
+
+SCRIPTS_PATH=/usr/libexec/openstack-tripleo
+if [[ ! "$PATH" =~ (^|:)"$SCRIPTS_PATH"(:|$) ]]
+then
+    export PATH=$SCRIPTS_PATH:$PATH
+fi
+
+$SCRIPT $@
