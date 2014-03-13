@@ -1,6 +1,6 @@
-%global commit ec0be12f0c78b5d91040d735ba18091b74b3a716
+%global commit 956943e37b91b22d739e9da6fe1a852e44581eff
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
-%global alphatag 20140226
+%global alphatag 20140314git
 
 Name:		instack-undercloud
 Version:	0.0.1
@@ -39,7 +39,7 @@ cp -ar elements/* %{buildroot}/%{_datadir}/%{name}
 install -d -m 755 %{buildroot}/%{_bindir}
 cp -ar scripts/* %{buildroot}/%{_bindir}
 # json files
-cp -ar json-files %{buildroot}/%{_datarootdir}/instack-undercloud
+cp -ar json-files %{buildroot}/%{_datadir}/instack-undercloud
 
 
 %files
@@ -47,15 +47,21 @@ cp -ar json-files %{buildroot}/%{_datarootdir}/instack-undercloud
 %doc LICENSE
 %doc instack-baremetal.answers.sample
 %doc instack-virt.answers.sample
-%{_datarootdir}/instack-undercloud
-%{_bindir}/install-undercloud
-%{_bindir}/install-undercloud-packages
-%{_bindir}/prepare-for-overcloud
-%{_bindir}/deploy-overcloud
-%{_bindir}/test-overcloud
+%{_datadir}/instack-undercloud
+%{_bindir}/instack-install-undercloud
+%{_bindir}/instack-install-undercloud-packages
+%{_bindir}/instack-prepare-for-overcloud
+%{_bindir}/instack-deploy-overcloud
+%{_bindir}/instack-deploy-overcloud-tuskarcli
+%{_bindir}/instack-test-overcloud
 
 
 %changelog
+* Thu Mar 13 2014 James Slagle <jslagle@redhat.com> 0.0.1-0.1.20140314git
+- All scripts are now prefixed with instack-*
+- Add new instack-deploy-overcloud-tuskarcli script
+- Use _datadir macro instead of _datarootdir
+
 * Wed Feb 26 2014 James Slagle <jslagle@redhat.com> 0.0.1-0.1.20140226git
 - Add scripts for prepare-for-overcloud and test-overcloud
 
