@@ -14,7 +14,7 @@ Source0:	https://github.com/slagle/%{name}/archive/%{commit}.tar.gz
 
 BuildArch:	noarch
 
-Requires:	python-instack
+Requires:	instack
 
 
 %description
