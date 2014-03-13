@@ -61,7 +61,7 @@ mkdir -p %{buildroot}/%{_bindir}
 install -p -m 755 -t %{buildroot}/%{_bindir} %{SOURCE1}
 # extract-docs.awk and extract-docs are only used for building docs, we don't
 # need them installed
-rm -f %{buildroot}/%{_libexecdir}/%{name}extract-docs*
+rm -f %{buildroot}/%{_libexecdir}/%{name}/extract-docs*
 
 # rc files
 install -d -m 755 %{buildroot}/%{_sysconfdir}/tripleo
@@ -88,6 +88,8 @@ cp -r doc/build/html/* %{buildroot}%{_datarootdir}/doc/tripleo/html
 %doc LICENSE README.md
 %{_bindir}/*
 %{_libexecdir}/%{name}/*
+# These config files are *not* noreplace. They aren't meant to be edited by
+# users.
 %config %{_sysconfdir}/tripleo
 %{_datarootdir}/tripleo
 
