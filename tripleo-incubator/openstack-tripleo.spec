@@ -5,7 +5,7 @@
 
 Name:			openstack-tripleo
 Version:		0.0.2
-Release:		1.%{alphatag}%{?dist}
+Release:		2.%{alphatag}%{?dist}
 Summary:		OpenStack TripleO
 
 Group:			Applications/System
@@ -72,31 +72,35 @@ install -p -m 644 -t %{buildroot}/%{_sysconfdir}/tripleo overcloudrc
 install -p -m 644 -t %{buildroot}/%{_sysconfdir}/tripleo overcloudrc-user
 
 # templates
-install -d -m 755 %{buildroot}/%{_datarootdir}/tripleo/templates
-install -p -m 644 -t %{buildroot}/%{_datarootdir}/tripleo/templates templates/*
+install -d -m 755 %{buildroot}/%{_datadir}/tripleo/templates
+install -p -m 644 -t %{buildroot}/%{_datadir}/tripleo/templates templates/*
 
 # libvirt templates
-install -d -m 755 %{buildroot}/%{_datarootdir}/tripleo/libvirt-templates
-install -p -m 644 -t %{buildroot}/%{_datarootdir}/tripleo/libvirt-templates libvirt-templates/*
+install -d -m 755 %{buildroot}/%{_datadir}/tripleo/libvirt-templates
+install -p -m 644 -t %{buildroot}/%{_datadir}/tripleo/libvirt-templates libvirt-templates/*
 
 # documentation
 sphinx-build -b html doc/source doc/build/html
-install -d -m 755 %{buildroot}%{_datarootdir}/doc/tripleo/html
-cp -r doc/build/html/* %{buildroot}%{_datarootdir}/doc/tripleo/html
+install -d -m 755 %{buildroot}%{_datadir}/doc/tripleo/html
+cp -r doc/build/html/* %{buildroot}%{_datadir}/doc/tripleo/html
 
 %files
 %doc LICENSE README.md
 %{_bindir}/*
-%{_libexecdir}/%{name}/*
+%{_libexecdir}/%{name}
 # These config files are *not* noreplace. They aren't meant to be edited by
 # users.
 %config %{_sysconfdir}/tripleo
-%{_datarootdir}/tripleo
+%{_datadir}/tripleo
 
 %files doc
-%{_datarootdir}/doc/tripleo
+%{_datadir}/doc/tripleo
 
 %changelog
+* Thu Mar 13 2014 James Slagle <jslagle@redhat.com> 0.0.2-2.20140220git
+- Use _datadir macro instead of _datarootdir
+- Correct permissions when creating /usr/bin/tripleo
+
 * Thu Mar 13 2014 James Slagle <jslagle@redhat.com> 0.0.2-1.20140220git
 - Move scripts under /usr/libexec/openstack-tripleo
 - Add /usr/bin/tripleo wrapper
