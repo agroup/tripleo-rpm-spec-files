@@ -5,7 +5,7 @@
 
 Name:			openstack-tripleo
 Version:		0.0.2
-Release:		2.%{alphatag}%{?dist}
+Release:		3.%{alphatag}%{?dist}
 Summary:		OpenStack TripleO
 
 Group:			Applications/System
@@ -94,9 +94,13 @@ cp -r doc/build/html/* %{buildroot}%{_datadir}/doc/tripleo/html
 %{_datadir}/tripleo
 
 %files doc
+%doc LICENSE README.md
 %{_datadir}/doc/tripleo
 
 %changelog
+* Tue Mar 18 2014 James Slagle <jslagle@redhat.com> 0.0.2-3.20140220git
+- Add LICENSE and README.md to -doc package
+
 * Thu Mar 13 2014 James Slagle <jslagle@redhat.com> 0.0.2-2.20140220git
 - Use _datadir macro instead of _datarootdir
 - Correct permissions when creating /usr/bin/tripleo
