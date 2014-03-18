@@ -11,7 +11,7 @@ To do a new build of instack you need to:
         git push --tags
 
 1. Build an sdist tarball for the release. This command would create
-   instack-0.0.3.tgz under the dist directory.
+   instack-0.0.3.tar.gz under the dist directory.
 
         python setup.py sdist
 

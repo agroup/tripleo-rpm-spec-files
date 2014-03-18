@@ -2,12 +2,12 @@
 
 Name:			instack
 Version:		0.0.2
-Release:		2%{?dist}
+Release:		3%{?dist}
 Summary:		OpenStack installation tool for diskimage-builder style elements
 Group:			Development/Languages
 License:		ASL 2.0
-URL:			https://github.com/slagle/instack
-Source0:		https://github.com/slagle/%{name}/releases/download/%{version}/%{name}-%{version}.tar.gz
+URL:			https://github.com/agroup/instack
+Source0:		https://github.com/agroup/%{name}/releases/download/%{version}/%{name}-%{version}.tar.gz
 
 BuildArch:		noarch
 BuildRequires:		python-setuptools
@@ -41,10 +41,12 @@ openstack-tripleo-image-elements.
 %{python2_sitelib}/*.egg-info
 
 %changelog
+* Tue Mar 18 2014 James Slagle <jslagle@redhat.com> 0.0.2-3
+- Switch to using agroup github repo for the source
+
 * Wed Mar 12 2014 James Slagle <jslagle@redhat.com> 0.0.2-2
 - Switch __python to __python2 macro
 - Switch python_sitelib to python2_sitelib macro
-- 
 
 * Mon Feb 24 2014 James Slagle <jslagle@redhat.com> 0.0.2-1
 - Don't use shortcommit
