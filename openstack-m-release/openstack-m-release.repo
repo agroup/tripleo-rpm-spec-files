@@ -16,7 +16,7 @@ gpgcheck=0
 
 [fedora-openstack-m-testing]
 name=openstack-m packages
-baseurl=http://repos.fedorapeople.org/repos/openstack-m/openstack-m/testing/fedora-$releasever/
+baseurl=http://repos.fedorapeople.org/repos/openstack-m/openstack-m/testing/
 enabled=0
 skip_if_unavailable=1
 gpgcheck=0
