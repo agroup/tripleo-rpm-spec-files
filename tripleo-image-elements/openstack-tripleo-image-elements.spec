@@ -41,6 +41,9 @@ Patch0015:	0015-Install-openstack-swift-object.patch
 Patch0016:	0016-Add-needed-swift-storage-dirs-for-packaged-install.patch
 # git format-patch -1 b13d01ec4bbac3e4b5e72b007cd3caa32b212d37
 Patch0017:	0017-Add-missing-x.patch
+# From https://review.openstack.org/#/c/81368/
+# git format-patch -1 77471bc5f5abb9b950f8e401634d5d2ef0a856a6
+Patch0018:	0018-Remove-mostly-empty-directories.patch
 
 BuildArch:	noarch
 BuildRequires:	python
@@ -76,6 +79,7 @@ program.
 %patch0015 -p1
 %patch0016 -p1
 %patch0017 -p1
+%patch0018 -p1
 
 %build
 %{__python} setup.py build
@@ -104,6 +108,9 @@ chmod +x %{buildroot}/%{_datarootdir}/tripleo-image-elements/swift-storage/insta
 %{_datadir}/tripleo-image-elements
 
 %changelog
+* Tue Mar 18 2014 James Slagle <jslagle@redhat.com> - 0.6.0-4
+- Add patch 0018-Remove-mostly-empty-directories.patch
+
 * Tue Mar 11 2014 James Slagle <jslagle@redhat.com> - 0.6.0-3
 - Update based on review feedback
 - Added patch 0017-Add-missing-x.patch

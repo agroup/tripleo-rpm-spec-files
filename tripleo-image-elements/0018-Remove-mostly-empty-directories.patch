@@ -1,0 +1,31 @@
+From 77471bc5f5abb9b950f8e401634d5d2ef0a856a6 Mon Sep 17 00:00:00 2001
+From: James Slagle <jslagle@redhat.com>
+Date: Tue, 18 Mar 2014 17:11:57 -0400
+Subject: [PATCH] Remove mostly empty directories
+
+The os-apply-config and os-config-applier directories are empty other
+than 1 hidden file in each. I see no technical reason for these to
+exist. And, they add to confusion as to if they're needed (they don't
+appear to be).
+
+Figured I'd just submit a review to rm them, to get any feedback. If
+there's a reason for these, perhaps it would be better suited to use a
+README in each directory, instead of a hidden file.
+
+Change-Id: I0f286a28601c292b5f70258747def36a08d93a87
+---
+ elements/os-apply-config/os-apply-config/.os-config-applier   | 0
+ elements/os-apply-config/os-config-applier/.os-config-applier | 0
+ 2 files changed, 0 insertions(+), 0 deletions(-)
+ delete mode 100644 elements/os-apply-config/os-apply-config/.os-config-applier
+ delete mode 100644 elements/os-apply-config/os-config-applier/.os-config-applier
+
+diff --git a/elements/os-apply-config/os-apply-config/.os-config-applier b/elements/os-apply-config/os-apply-config/.os-config-applier
+deleted file mode 100644
+index e69de29..0000000
+diff --git a/elements/os-apply-config/os-config-applier/.os-config-applier b/elements/os-apply-config/os-config-applier/.os-config-applier
+deleted file mode 100644
+index e69de29..0000000
+-- 
+1.8.5.3
+
