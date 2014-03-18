@@ -1,6 +1,6 @@
 Name:           openstack-m-release
 Version:        icehouse
-Release:        1
+Release:        2
 Summary:        openstack-m repository configuration
 
 Group:          System Environment/Base
@@ -25,5 +25,8 @@ install -p -D -m 644 %{SOURCE0} %{buildroot}%{_sysconfdir}/yum.repos.d/openstack
 
 
 %changelog
-* Tue Feb 18 2014 James Slagle <jslagle@redhat.com>
+* Tue Mar 18 2014 James Slagle <jslagle@redhat.com> icehouse-2
+- Added testing repository
+
+* Tue Feb 18 2014 James Slagle <jslagle@redhat.com> icehouse-1
 - Initial rpm build.
