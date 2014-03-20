@@ -44,6 +44,10 @@ Patch0017:	0017-Add-missing-x.patch
 # From https://review.openstack.org/#/c/81368/
 # git format-patch -1 77471bc5f5abb9b950f8e401634d5d2ef0a856a6
 Patch0018:	0018-Remove-mostly-empty-directories.patch
+# git format-patch -1 9f8e1c5f98f846cc24214c0a0794a3732f670bee
+Patch0019:	0019-os-config-package-install-support.patch
+# git format-patch -1 0c88279fd43c75834d8f05f9be2ef02cc26512ba
+Patch0020:	0020-Always-create-o-a-c-s-TEMPLATE_ROOT.patch
 
 BuildArch:	noarch
 BuildRequires:	python
@@ -80,6 +84,8 @@ program.
 %patch0016 -p1
 %patch0017 -p1
 %patch0018 -p1
+%patch0019 -p1
+%patch0020 -p1
 
 %build
 %{__python} setup.py build
@@ -98,6 +104,10 @@ chmod +x %{buildroot}/%{_datarootdir}/tripleo-image-elements/neutron-server/inst
 chmod +x %{buildroot}/%{_datarootdir}/tripleo-image-elements/fedora-rdo-icehouse/pre-install.d/10-rdo-icehouse-repo
 chmod +x %{buildroot}/%{_datarootdir}/tripleo-image-elements/cinder/install.d/73-cinder
 chmod +x %{buildroot}/%{_datarootdir}/tripleo-image-elements/swift-storage/install.d/76-swift-dirs
+chmod +x %{buildroot}/%{_datarootdir}/tripleo-image-elements/os-refresh-config/install.d/os-refresh-config-package-install/01-os-refresh-config
+chmod +x %{buildroot}/%{_datarootdir}/tripleo-image-elements/os-collect-config/install.d/os-collect-config-package-install/10-os-collect-config
+chmod +x %{buildroot}/%{_datarootdir}/tripleo-image-elements/os-apply-config/install.d/os-apply-config-package-install/10-os-config-applier
+chmod +x %{buildroot}/%{_datarootdir}/tripleo-image-elements/os-apply-config/install.d/11-create-template-root
 
 %files
 %doc LICENSE

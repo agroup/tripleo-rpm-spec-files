@@ -1,0 +1,42 @@
+From 0c88279fd43c75834d8f05f9be2ef02cc26512ba Mon Sep 17 00:00:00 2001
+From: James Slagle <jslagle@redhat.com>
+Date: Wed, 19 Mar 2014 16:08:06 -0400
+Subject: [PATCH] Always create o-a-c's $TEMPLATE_ROOT
+
+Creating $TEMPLATE_ROOT is common to both os-apply-config package and
+source installs, so move it into it's own install hook script under
+install.d.
+
+Change-Id: Iba79129cd111c144f67efabb93d4eb81641d1c2c
+---
+ elements/os-apply-config/install.d/11-create-template-root          | 6 ++++++
+ .../install.d/os-apply-config-source-install/10-os-config-applier   | 3 ---
+ 2 files changed, 6 insertions(+), 3 deletions(-)
+ create mode 100755 elements/os-apply-config/install.d/11-create-template-root
+
+diff --git a/elements/os-apply-config/install.d/11-create-template-root b/elements/os-apply-config/install.d/11-create-template-root
+new file mode 100755
+index 0000000..2559cf1
+--- /dev/null
++++ b/elements/os-apply-config/install.d/11-create-template-root
+@@ -0,0 +1,6 @@
++#!/bin/bash
++
++set -eux
++
++TEMPLATE_ROOT=$(os-apply-config --print-templates)
++mkdir -p $TEMPLATE_ROOT
+diff --git a/elements/os-apply-config/install.d/os-apply-config-source-install/10-os-config-applier b/elements/os-apply-config/install.d/os-apply-config-source-install/10-os-config-applier
+index d550700..b78f38f 100755
+--- a/elements/os-apply-config/install.d/os-apply-config-source-install/10-os-config-applier
++++ b/elements/os-apply-config/install.d/os-apply-config-source-install/10-os-config-applier
+@@ -12,6 +12,3 @@ virtualenv --setuptools /opt/stack/venvs/os-apply-config
+ 
+ ln -s /opt/stack/venvs/os-apply-config/bin/os-apply-config /usr/local/bin/os-apply-config
+ ln -s /opt/stack/venvs/os-apply-config/bin/os-config-applier /usr/local/bin/os-config-applier
+-
+-TEMPLATE_ROOT=$(os-apply-config --print-templates)
+-mkdir -p $TEMPLATE_ROOT
+-- 
+1.8.5.3
+

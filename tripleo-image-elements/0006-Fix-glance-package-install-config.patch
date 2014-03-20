@@ -25,8 +25,8 @@ index 641cc16..2690a4d 100755
 +    # The package installs for these variants drop their config under
 +    # /usr/share/glance.  We need the paste ini files symlinked under
 +    # /etc/glance, and the conf files symlinked under /usr/share/glance.
-+    ln -s /usr/share/glance/glance-api-dist-paste.ini /etc/glance/glance-api-paste.ini
-+    ln -s /usr/share/glance/glance-registry-dist-paste.ini /etc/glance/glance-registry-paste.ini
++    ln -f -s /usr/share/glance/glance-api-dist-paste.ini /etc/glance/glance-api-paste.ini
++    ln -f -s /usr/share/glance/glance-registry-dist-paste.ini /etc/glance/glance-registry-paste.ini
 +    ln -f -s /etc/glance/glance-api.conf /usr/share/glance/glance-api-dist.conf
 +    ln -f -s /etc/glance/glance-cache.conf /usr/share/glance/glance-cache-dist.conf
 +    ln -f -s /etc/glance/glance-registry.conf /usr/share/glance/glance-registry-dist.conf
