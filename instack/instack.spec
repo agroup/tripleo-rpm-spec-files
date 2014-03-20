@@ -1,8 +1,8 @@
 %global repo_name instack
 
 Name:			instack
-Version:		0.0.2
-Release:		3%{?dist}
+Version:		0.0.3
+Release:		1%{?dist}
 Summary:		OpenStack installation tool for diskimage-builder style elements
 Group:			Development/Languages
 License:		ASL 2.0
@@ -41,6 +41,9 @@ openstack-tripleo-image-elements.
 %{python2_sitelib}/*.egg-info
 
 %changelog
+* Wed Mar 19 2014 James Slagle <jslagle@redhat.com> 0.0.3-1
+- Bump to 0.0.3
+
 * Tue Mar 18 2014 James Slagle <jslagle@redhat.com> 0.0.2-3
 - Switch to using agroup github repo for the source
 

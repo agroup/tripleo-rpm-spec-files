@@ -1,0 +1,48 @@
+From 4ab787e77e1a11725c3afc6258bc43053430ae86 Mon Sep 17 00:00:00 2001
+From: James Slagle <jslagle@redhat.com>
+Date: Thu, 20 Mar 2014 12:11:03 -0400
+Subject: [PATCH] qpid updates
+
+Change-Id: Ifbf356a3f1259d3132e02816937f788d73b7dfe5
+---
+ elements/qpidd/install.d/20-qpidd                          | 12 ------------
+ elements/qpidd/os-refresh-config/post-configure.d/73-qpidd |  1 +
+ 2 files changed, 1 insertion(+), 12 deletions(-)
+
+diff --git a/elements/qpidd/install.d/20-qpidd b/elements/qpidd/install.d/20-qpidd
+index 9e50174..5dbb4f1 100755
+--- a/elements/qpidd/install.d/20-qpidd
++++ b/elements/qpidd/install.d/20-qpidd
+@@ -17,18 +17,6 @@ post-start exec sleep 1
+ eof
+ }
+ 
+-function install_qpidd_systemd {
+-  cat > /etc/systemd/system/qpidd.service << eof
+-.include /lib/systemd/system/qpidd.service
+-[Unit]
+-Before=rc-local.service
+-Restart=on-failure
+-eof
+-}
+-
+-
+ if [ "$DIB_INIT_SYSTEM" == "upstart" ]; then
+     install_qpidd_upstart
+-elif [ "$DIB_INIT_SYSTEM" == "systemd" ]; then
+-    install_qpidd_systemd
+ fi
+diff --git a/elements/qpidd/os-refresh-config/post-configure.d/73-qpidd b/elements/qpidd/os-refresh-config/post-configure.d/73-qpidd
+index 39adc9c..1980e86 100755
+--- a/elements/qpidd/os-refresh-config/post-configure.d/73-qpidd
++++ b/elements/qpidd/os-refresh-config/post-configure.d/73-qpidd
+@@ -6,5 +6,6 @@ password=$(os-apply-config --key qpid.password)
+ 
+ sasldb_file=$(grep sasldb_path /etc/sasl2/qpidd.conf | cut -d \: -f 2 | cut -d " " -f 2)
+ echo "$password" | saslpasswd2 -c -p -f $sasldb_file -u QPID $username
++chown qpidd.qpidd $sasldb_file
+ 
+ service qpidd restart
+-- 
+1.8.5.3
+

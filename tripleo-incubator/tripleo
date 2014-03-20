@@ -1,15 +1,12 @@
-#!/bin/bash
+#!/usr/bin/python
 
-set -eu
+import os
+import subprocess
+import sys
 
-SCRIPT=${1:?"You must specify a tripleo script to execute"}
+command = sys.argv[1:]
+command[0] = "/usr/libexec/openstack-tripleo/%s" % command[0]
 
-shift
+os.environ["PATH"] = "%s:/usr/libexec/openstack-tripleo" % os.environ["PATH"]
 
-SCRIPTS_PATH=/usr/libexec/openstack-tripleo
-if [[ ! "$PATH" =~ (^|:)"$SCRIPTS_PATH"(:|$) ]]
-then
-    export PATH=$SCRIPTS_PATH:$PATH
-fi
-
-$SCRIPT $@
+subprocess.call(command)

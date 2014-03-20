@@ -48,6 +48,11 @@ Patch0018:	0018-Remove-mostly-empty-directories.patch
 Patch0019:	0019-os-config-package-install-support.patch
 # git format-patch -1 0c88279fd43c75834d8f05f9be2ef02cc26512ba
 Patch0020:	0020-Always-create-o-a-c-s-TEMPLATE_ROOT.patch
+# https://review.openstack.org/#/c/81804/
+# git format-patch -1 c787432bc589cced563e4b565d76f000f8f5ef77
+Patch0021:	0021-Fix-tgt-target-in-cinder-element.patch
+Patch0022:	0022-qpid-updates.patch
+
 
 BuildArch:	noarch
 BuildRequires:	python
@@ -86,6 +91,8 @@ program.
 %patch0018 -p1
 %patch0019 -p1
 %patch0020 -p1
+%patch0021 -p1
+%patch0022 -p1
 
 %build
 %{__python} setup.py build
