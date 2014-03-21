@@ -1,0 +1,65 @@
+diff --git a/block-storage.yaml b/block-storage.yaml
+index ca56fce..c325e85 100644
+--- a/block-storage.yaml
++++ b/block-storage.yaml
+@@ -51,7 +51,7 @@ Resources:
+           Ref: CinderPassword
+         volume: 'true'
+       admin-password: {Ref: AdminPassword}
+-      rabbit:
++      qpid:
+         host: {"Fn::Select": [ 0, {"Fn::Select": [ "ctlplane", {"Fn::GetAtt": [notCompute0, networks]} ]} ] }
+         username: {Ref: RabbitUserName}
+         password: {Ref: RabbitPassword}
+diff --git a/notcompute.yaml b/notcompute.yaml
+index b097dd0..79c21bf 100644
+--- a/notcompute.yaml
++++ b/notcompute.yaml
+@@ -179,7 +179,7 @@ Resources:
+             - - 'mysql://neutron:'
+               - {Ref: NeutronDBPassword}
+               - '@127.0.0.1/ovs_neutron'
+-      rabbit:
++      qpid:
+         host:
+           '127.0.0.1'
+         username:
+diff --git a/nova-compute-instance.yaml b/nova-compute-instance.yaml
+index 55665dc..a211ed4 100644
+--- a/nova-compute-instance.yaml
++++ b/nova-compute-instance.yaml
+@@ -189,7 +189,7 @@ Resources:
+         service-password:
+           Ref: NeutronPassword
+       admin-password: {Ref: AdminPassword}
+-      rabbit:
++      qpid:
+         host: {Ref: RabbitHost}
+         username: {Ref: RabbitUserName}
+         password: {Ref: RabbitPassword}
+diff --git a/overcloud-source.yaml b/overcloud-source.yaml
+index 6d21a4d..c799e57 100644
+--- a/overcloud-source.yaml
++++ b/overcloud-source.yaml
+@@ -422,7 +422,7 @@ Resources:
+             - SecretAccessKey
+           stack_name:
+             Ref: AWS::StackName
+-      rabbit:
++      qpid:
+         host:
+           Fn::Select:
+             - 0
+diff --git a/undercloud-source.yaml b/undercloud-source.yaml
+index efce1e8..95bd6b6 100644
+--- a/undercloud-source.yaml
++++ b/undercloud-source.yaml
+@@ -185,7 +185,7 @@ Resources:
+           enable_tunneling: 'False'
+         service-password:
+           Ref: NeutronPassword
+-      rabbit:
++      qpid:
+         host: 127.0.0.1
+         username:
+           Ref: RabbitUserName

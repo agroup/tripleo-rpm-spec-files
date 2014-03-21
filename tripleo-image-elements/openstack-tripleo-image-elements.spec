@@ -1,3 +1,6 @@
+# Turn off the brp-python-bytecompile script
+%global __os_install_post %(echo '%{__os_install_post}' | sed -e 's!/usr/lib[^[:space:]]*/brp-python-bytecompile[[:space:]].*$!!g')
+
 Name:		openstack-tripleo-image-elements
 Summary:	OpenStack TripleO Image Elements for diskimage-builder
 Version:	0.6.0
@@ -54,6 +57,8 @@ Patch0021:	0021-Fix-tgt-target-in-cinder-element.patch
 Patch0022:	0022-qpid-updates.patch
 # git format-patch -1 3c843ec24d7d76c5a2203575f4284585467ae603
 Patch0023:	0023-Enable-os-collect-config-for-the-package-install.patch
+Patch0024:	0024-Fix-horizon-local_settings.py.patch
+Patch0025:	0025-Remove-rabbitmq-server-from-boot-stack-s-element-dep.patch
 
 
 BuildArch:	noarch
@@ -96,6 +101,8 @@ program.
 %patch0021 -p1
 %patch0022 -p1
 %patch0023 -p1
+%patch0024 -p1
+%patch0025 -p1
 
 %build
 %{__python} setup.py build

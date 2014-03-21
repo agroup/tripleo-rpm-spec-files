@@ -1,6 +1,6 @@
 Name:		openstack-tripleo-heat-templates
 Summary:	Heat templates for TripleO
-Version:	0.4.0
+Version:	0.4.1
 Release:	2%{?dist}
 License:	ASL 2.0
 Group:		System Environment/Base
@@ -10,6 +10,7 @@ Source0:	http://tarballs.openstack.org/tripleo-heat-templates/tripleo-heat-templ
 # Roll back the switch to use OS::Heat::UpdateWaitConditionHandle, since RDO
 # openstack-heat does not yet have that functionality.
 Patch0001:	0001-WaitConditionHandle.patch
+Patch0002:	0002-use-qpid.patch
 
 BuildArch:	noarch
 BuildRequires:	python2-devel
@@ -27,6 +28,7 @@ building Heat Templates to do deployments of OpenStack.
 %setup -q -n tripleo-heat-templates-%{version}
 
 %patch0001 -p1
+%patch0002 -p1
 
 %build
 %{__python2} setup.py build
