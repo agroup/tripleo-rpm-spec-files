@@ -52,6 +52,8 @@ Patch0020:	0020-Always-create-o-a-c-s-TEMPLATE_ROOT.patch
 # git format-patch -1 c787432bc589cced563e4b565d76f000f8f5ef77
 Patch0021:	0021-Fix-tgt-target-in-cinder-element.patch
 Patch0022:	0022-qpid-updates.patch
+# git format-patch -1 3c843ec24d7d76c5a2203575f4284585467ae603
+Patch0023:	0023-Enable-os-collect-config-for-the-package-install.patch
 
 
 BuildArch:	noarch
@@ -93,6 +95,7 @@ program.
 %patch0020 -p1
 %patch0021 -p1
 %patch0022 -p1
+%patch0023 -p1
 
 %build
 %{__python} setup.py build
