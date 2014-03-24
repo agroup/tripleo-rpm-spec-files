@@ -1,11 +1,11 @@
-%global commit 968741f78fd46a3436d153036bf8bc245928b2d2
+%global commit 6e161d534fcf607da31db767fef43edf4574f2a8
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 %global alphatag 20140324git
 
 Name:		instack-undercloud
 Version:	0.0.1
 Release:	0.1.%{alphatag}%{?dist}
-Summary:	Installation tools to install an undercloud via python-instack
+Summary:	Installation tools to install an undercloud via instack
 
 Group:		Development/Languages
 License:	ASL 2.0
