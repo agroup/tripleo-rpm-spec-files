@@ -1,6 +1,6 @@
 %global commit 968741f78fd46a3436d153036bf8bc245928b2d2
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
-%global alphatag 20140319git
+%global alphatag 20140324git
 
 Name:		instack-undercloud
 Version:	0.0.1
@@ -62,7 +62,10 @@ cp -ar json-files %{buildroot}/%{_datadir}/instack-undercloud
 
 
 %changelog
-* Thu Mar 19 2014 James Slagle <jslagle@redhat.com> 0.0.1-0.1.20140319git
+* Mon Mar 24 2014 James Slagle <jslagle@redhat.com> 0.0.1-0.1.20140324git
+- Bump to latest from git.
+
+* Thu Mar 20 2014 James Slagle <jslagle@redhat.com> 0.0.1-0.1.20140319git
 - Add new scripts instack-build-images and instack-virt-setup
 - Add Requires on other tripleo rpm's.
 
