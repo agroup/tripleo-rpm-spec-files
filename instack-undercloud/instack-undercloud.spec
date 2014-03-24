@@ -1,11 +1,11 @@
-%global commit 956943e37b91b22d739e9da6fe1a852e44581eff
+%global commit 6e161d534fcf607da31db767fef43edf4574f2a8
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
-%global alphatag 20140314git
+%global alphatag 20140324git
 
 Name:		instack-undercloud
 Version:	0.0.1
 Release:	0.1.%{alphatag}%{?dist}
-Summary:	Installation tools to install an undercloud via python-instack
+Summary:	Installation tools to install an undercloud via instack
 
 Group:		Development/Languages
 License:	ASL 2.0
@@ -15,6 +15,9 @@ Source0:	https://github.com/slagle/%{name}/archive/%{commit}.tar.gz
 BuildArch:	noarch
 
 Requires:	instack
+Requires:	openstack-tripleo
+Requires:	openstack-tripleo-heat-templates
+Requires:	openstack-tripleo-image-elements
 
 
 %description
@@ -25,10 +28,6 @@ installation.
 
 %prep
 %setup -q -n %{name}-%{commit}
-
-
-%build
-# nothing to build
 
 
 %install
@@ -54,9 +53,19 @@ cp -ar json-files %{buildroot}/%{_datadir}/instack-undercloud
 %{_bindir}/instack-deploy-overcloud
 %{_bindir}/instack-deploy-overcloud-tuskarcli
 %{_bindir}/instack-test-overcloud
+%{_bindir}/instack-build-images
+%{_bindir}/instack-virt-setup
 
 
 %changelog
+* Mon Mar 24 2014 James Slagle <jslagle@redhat.com> 0.0.1-0.1.20140324git
+- Bump to latest from git.
+- Fix Summary and remove empty build.
+
+* Thu Mar 20 2014 James Slagle <jslagle@redhat.com> 0.0.1-0.1.20140319git
+- Add new scripts instack-build-images and instack-virt-setup
+- Add Requires on other tripleo rpm's.
+
 * Thu Mar 13 2014 James Slagle <jslagle@redhat.com> 0.0.1-0.1.20140314git
 - All scripts are now prefixed with instack-*
 - Add new instack-deploy-overcloud-tuskarcli script
