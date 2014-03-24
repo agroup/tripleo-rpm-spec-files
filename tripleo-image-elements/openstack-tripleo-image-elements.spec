@@ -3,63 +3,52 @@
 
 Name:		openstack-tripleo-image-elements
 Summary:	OpenStack TripleO Image Elements for diskimage-builder
-Version:	0.6.0
-Release:	4%{?dist}
+Version:	0.6.3
+Release:	2%{?dist}
 License:	ASL 2.0
 Group:		System Environment/Base
 URL:		https://wiki.openstack.org/wiki/TripleO
 Source0:	http://tarballs.openstack.org/tripleo-image-elements/tripleo-image-elements-%{version}.tar.gz
 
-# git format-patch -1 8475d117d722bcbf919eb0f332f34c0dc7ace36b
-Patch0001:	0001-Ability-to-add-create-dir-service-separately.patch
-# git format-patch -1 865c02f71483195c8f27ec94689833eb00049df2
-Patch0002:	0002-Add-create-dir-service-for-neutron.patch
-# git format-patch -1 6cdec90acb28c62fa83b64611e8e8f8b5416c46e
-Patch0003:	0003-Add-create-dir-service-for-nova.patch
-# git format-patch -1 a2464f6635a322d003c4b4316c030e914cea42dd
-Patch0004:	0004-Fix-neutron-package-install.patch
-# git format-patch -1 eed1086f703609203b805f11bfe803c96cc8b8c6
-Patch0005:	0005-Correct-owner-for-glance-api-log-file.patch
-# git format-patch -1 9691188d6bd16d23db049fd769c9371365541d6e
-Patch0006:	0006-Fix-glance-package-install-config.patch
-# git format-patch -1 c579d9a6fcf80fcf407de6d603f127ef1953e25b
-Patch0007:	0007-Add-fedora-rdo-icehouse-element.patch
-# git format-patch -1 38c01c8470fafcb44c3d2eeb742b32d100148e88
-Patch0008:	0008-Fix-typo.patch
-# git format-patch -1 c2225e463aace57a5e1de9b70d5410c1620bc3ce
-Patch0009:	0009-Install-lvm2-package-for-cinder.patch
-# git format-patch -1 8d04847f5a0c841dd000877b5abf3ff5aa902293
-Patch0010:	0010-Common-cinder-install-code.patch
-# git format-patch -1 4d9c0e9573269f53a8f833539b6d56dd6936432b
-Patch0011:	0011-Use-os-svc-restart-for-cinder-api.patch
-# git format-patch -1 82d54ee87ba5ceed4000d4c86e042dbbe4c6e0e4
-Patch0012:	0012-Remove-unneeded-chown-of-var-run-nova.patch
-# git format-patch -1 566d60ad703852b40f13c810063fb365f95620d4
-Patch0013:	0013-Add-create-dir-service-for-neutron-ovs-agent.patch
-# git format-patch -1 88033ad64b3597f3cdc1b3c101b42076687e0c6a
-Patch0014:	0014-Add-missing-x.patch
-# git format-patch -1 cf07365002d83c5a5b9cd266a45acd0023c84610
-Patch0015:	0015-Install-openstack-swift-object.patch
-# git format-patch -1 d46a0a82626eb76b0aaafebbecc04a9ed729fad8
-Patch0016:	0016-Add-needed-swift-storage-dirs-for-packaged-install.patch
-# git format-patch -1 b13d01ec4bbac3e4b5e72b007cd3caa32b212d37
-Patch0017:	0017-Add-missing-x.patch
-# From https://review.openstack.org/#/c/81368/
+# https://review.openstack.org/#/c/81368/
 # git format-patch -1 77471bc5f5abb9b950f8e401634d5d2ef0a856a6
-Patch0018:	0018-Remove-mostly-empty-directories.patch
-# git format-patch -1 9f8e1c5f98f846cc24214c0a0794a3732f670bee
-Patch0019:	0019-os-config-package-install-support.patch
-# git format-patch -1 0c88279fd43c75834d8f05f9be2ef02cc26512ba
-Patch0020:	0020-Always-create-o-a-c-s-TEMPLATE_ROOT.patch
+Patch0001:	0001-Remove-mostly-empty-directories.patch
+
 # https://review.openstack.org/#/c/81804/
 # git format-patch -1 c787432bc589cced563e4b565d76f000f8f5ef77
-Patch0021:	0021-Fix-tgt-target-in-cinder-element.patch
-Patch0022:	0022-qpid-updates.patch
-# git format-patch -1 3c843ec24d7d76c5a2203575f4284585467ae603
-Patch0023:	0023-Enable-os-collect-config-for-the-package-install.patch
-Patch0024:	0024-Fix-horizon-local_settings.py.patch
-Patch0025:	0025-Remove-rabbitmq-server-from-boot-stack-s-element-dep.patch
+Patch0002:	0002-Fix-tgt-target-in-cinder-element.patch
 
+# https://review.openstack.org/#/c/81927/
+# git format-patch -1 3c843ec24d7d76c5a2203575f4284585467ae603
+Patch0003:	0003-Enable-os-collect-config-for-the-package-install.patch
+
+# No review for this upstream yet, but we need this to have a working horizon
+# from packages install.
+Patch0004:	0004-Fix-horizon-local_settings.py.patch
+
+# https://review.openstack.org/#/c/81901/
+# git format-patch -1 f21444ce2f453608a48e40b5750652caee2776a0
+Patch0005:	0005-Custom-service-file-is-not-needed-for-qpidd-on-syste.patch
+
+# https://review.openstack.org/#/c/81908/
+# git format-patch -1 4c4f957f63218a8afdc0cddaad1d412d97103f6e
+Patch0006:	0006-qpidd-user-should-own-sasldb-file.patch
+
+# We can't run neutron-db-manage....upgrade head in reset-db from boot-stack
+# due to this bug:
+# https://bugs.launchpad.net/neutron/+bug/1254246
+# The fix is merged: https://review.openstack.org/#/c/61663/
+# However that fix is not in openstack-neutron from rdo icehouse. It will only
+# be in the icehouse-3 package which is not yet available.
+Patch0007:	0007-No-neutron-db-manage-upgrade-head.patch
+
+# https://review.openstack.org/82387
+# git format-patch -1 3769f6c6c393a62a33a3b7c680943d3ddc70eaeb
+Patch008:	0008-Add-missing-x.patch
+
+# https://review.openstack.org/82529
+# git format-patch -1 2e37cf5ba9499ae99d86f017ecb9cf72a206a022
+Patch0009:	0009-Create-and-use-libvirtd-group-for-package-install.patch
 
 BuildArch:	noarch
 BuildRequires:	python
@@ -87,22 +76,6 @@ program.
 %patch0007 -p1
 %patch0008 -p1
 %patch0009 -p1
-%patch0010 -p1
-%patch0011 -p1
-%patch0012 -p1
-%patch0013 -p1
-%patch0014 -p1
-%patch0015 -p1
-%patch0016 -p1
-%patch0017 -p1
-%patch0018 -p1
-%patch0019 -p1
-%patch0020 -p1
-%patch0021 -p1
-%patch0022 -p1
-%patch0023 -p1
-%patch0024 -p1
-%patch0025 -p1
 
 %build
 %{__python} setup.py build
@@ -113,19 +86,6 @@ program.
 # remove .git-keep-empty files that get installed
 find %{buildroot} -name .git-keep-empty | xargs rm -f
 
-# These are the scripts created by our patches, but the patches don't bring +x
-# along with them, so to avoid some rpmlint errors, +x them here. Once patches
-# are marged upstream, these lines can be removed.
-chmod +x %{buildroot}/%{_datarootdir}/tripleo-image-elements/neutron-dhcp-agent/install.d/neutron-package-install/80-neutron-dhcp-agent
-chmod +x %{buildroot}/%{_datarootdir}/tripleo-image-elements/neutron-server/install.d/neutron-package-install/76-neutron
-chmod +x %{buildroot}/%{_datarootdir}/tripleo-image-elements/fedora-rdo-icehouse/pre-install.d/10-rdo-icehouse-repo
-chmod +x %{buildroot}/%{_datarootdir}/tripleo-image-elements/cinder/install.d/73-cinder
-chmod +x %{buildroot}/%{_datarootdir}/tripleo-image-elements/swift-storage/install.d/76-swift-dirs
-chmod +x %{buildroot}/%{_datarootdir}/tripleo-image-elements/os-refresh-config/install.d/os-refresh-config-package-install/01-os-refresh-config
-chmod +x %{buildroot}/%{_datarootdir}/tripleo-image-elements/os-collect-config/install.d/os-collect-config-package-install/10-os-collect-config
-chmod +x %{buildroot}/%{_datarootdir}/tripleo-image-elements/os-apply-config/install.d/os-apply-config-package-install/10-os-config-applier
-chmod +x %{buildroot}/%{_datarootdir}/tripleo-image-elements/os-apply-config/install.d/11-create-template-root
-
 %files
 %doc LICENSE
 %doc README.md
@@ -135,6 +95,13 @@ chmod +x %{buildroot}/%{_datarootdir}/tripleo-image-elements/os-apply-config/ins
 %{_datadir}/tripleo-image-elements
 
 %changelog
+* Sun Mar 23 2014 James Slagle <jslagle@redhat.com> - 0.6.3-2
+- Add Patch 0008-Add-missing-x.patch
+- Add Patch 0009-Create-and-use-libvirtd-group-for-package-install.patch
+
+* Fri Mar 21 2014 James Slagle <jslagle@redhat.com> - 0.6.3-1
+- Rebase onto 0.6.3
+
 * Tue Mar 18 2014 James Slagle <jslagle@redhat.com> - 0.6.0-4
 - Add patch 0018-Remove-mostly-empty-directories.patch
 

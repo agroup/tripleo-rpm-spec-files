@@ -1,18 +1,16 @@
-From 5db9bab2a425a5becb799c84a61d9d9eca41106b Mon Sep 17 00:00:00 2001
+From fec2e7c2b418c8734440479f9a65b25687fa6e1b Mon Sep 17 00:00:00 2001
 From: James Slagle <jslagle@redhat.com>
-Date: Fri, 21 Mar 2014 07:40:10 -0400
+Date: Fri, 21 Mar 2014 13:08:14 -0400
 Subject: [PATCH] Fix horizon local_settings.py
 
-Change-Id: Ib2fff07b1d5b02a2ad0e0d3da93096cf1c1709df
+Change-Id: Ida3583d7508c0cd5715efdd523e54cdfda260adf
 ---
  .../os-apply-config/etc/horizon/.secret_key_store  |  1 -
- .../os-apply-config/etc/httpd/conf.d/horizon.conf  | 40 ----------
- .../openstack_dashboard/local/local_settings.py    | 85 ----------------------
- .../os-refresh-config/post-configure.d/100-horizon | 10 +--
- 4 files changed, 2 insertions(+), 134 deletions(-)
+ .../os-apply-config/etc/horizon/local_settings.py  | 85 ----------------------
+ .../os-refresh-config/post-configure.d/100-horizon | 12 +--
+ 3 files changed, 2 insertions(+), 96 deletions(-)
  delete mode 100644 elements/horizon/os-apply-config/etc/horizon/.secret_key_store
- delete mode 100644 elements/horizon/os-apply-config/etc/httpd/conf.d/horizon.conf
- delete mode 100644 elements/horizon/os-apply-config/opt/stack/venvs/horizon/lib/python2.7/site-packages/openstack_dashboard/local/local_settings.py
+ delete mode 100644 elements/horizon/os-apply-config/etc/horizon/local_settings.py
 
 diff --git a/elements/horizon/os-apply-config/etc/horizon/.secret_key_store b/elements/horizon/os-apply-config/etc/horizon/.secret_key_store
 deleted file mode 100644
@@ -21,56 +19,10 @@ index 21fdd1a..0000000
 +++ /dev/null
 @@ -1 +0,0 @@
 -{{horizon.secret_key}}
-diff --git a/elements/horizon/os-apply-config/etc/httpd/conf.d/horizon.conf b/elements/horizon/os-apply-config/etc/httpd/conf.d/horizon.conf
-deleted file mode 100644
-index 75f594f..0000000
---- a/elements/horizon/os-apply-config/etc/httpd/conf.d/horizon.conf
-+++ /dev/null
-@@ -1,40 +0,0 @@
--<VirtualHost *:80>
--    WSGIScriptAlias / /opt/stack/venvs/horizon/lib/python2.7/site-packages/openstack_dashboard/wsgi/django.wsgi
--    WSGIDaemonProcess horizon user=horizon group=horizon processes=3 threads=10 home=/opt/stack/venvs/horizon python-path=/opt/stack/venvs/horizon:/opt/stack/venvs/horizon/lib/python2.7/site-packages/
--    WSGIApplicationGroup %{GLOBAL}
--
--    SetEnv APACHE_RUN_USER horizon
--    SetEnv APACHE_RUN_GROUP horizon
--    WSGIProcessGroup horizon
--
--    DocumentRoot /opt/stack/venvs/horizon/lib/python2.7/site-packages/openstack_dashboard/static
--    Alias /static /opt/stack/venvs/horizon/lib/python2.7/site-packages/openstack_dashboard/static
--    Alias /media /opt/stack/venvs/horizon/lib/python2.7/site-packages/openstack_dashboard/static
--
--    <Directory />
--        Options FollowSymLinks
--        AllowOverride None
--    </Directory>
--
--    <Directory /opt/stack/venvs/horizon/lib/python2.7/site-packages/openstack_dashboard/static>
--        Options Indexes FollowSymLinks MultiViews
--        Require all granted
--        AllowOverride None
--        Order allow,deny
--        allow from all
--    </Directory>
--
--    <Directory /opt/stack/venvs/horizon/lib/python2.7/site-packages/openstack_dashboard>
--        Options Indexes FollowSymLinks MultiViews
--        Require all granted
--        AllowOverride None
--        Order allow,deny
--        allow from all
--    </Directory>
--
--    ErrorLog /var/log/httpd/horizon_error.log
--    LogLevel debug
--    CustomLog /var/log/httpd/horizon_access.log combined
--</VirtualHost>
--
--WSGISocketPrefix /var/run/httpd
-diff --git a/elements/horizon/os-apply-config/opt/stack/venvs/horizon/lib/python2.7/site-packages/openstack_dashboard/local/local_settings.py b/elements/horizon/os-apply-config/opt/stack/venvs/horizon/lib/python2.7/site-packages/openstack_dashboard/local/local_settings.py
+diff --git a/elements/horizon/os-apply-config/etc/horizon/local_settings.py b/elements/horizon/os-apply-config/etc/horizon/local_settings.py
 deleted file mode 100644
 index 7d9b4ad..0000000
---- a/elements/horizon/os-apply-config/opt/stack/venvs/horizon/lib/python2.7/site-packages/openstack_dashboard/local/local_settings.py
+--- a/elements/horizon/os-apply-config/etc/horizon/local_settings.py
 +++ /dev/null
 @@ -1,85 +0,0 @@
 -# Licensed under the Apache License, Version 2.0 (the "License");
@@ -159,22 +111,24 @@ index 7d9b4ad..0000000
 -
 -TIME_ZONE = "UTC"
 diff --git a/elements/horizon/os-refresh-config/post-configure.d/100-horizon b/elements/horizon/os-refresh-config/post-configure.d/100-horizon
-index a90a908..1f3de6b 100755
+index b0f2499..1f3de6b 100755
 --- a/elements/horizon/os-refresh-config/post-configure.d/100-horizon
 +++ b/elements/horizon/os-refresh-config/post-configure.d/100-horizon
-@@ -1,12 +1,6 @@
+@@ -1,14 +1,6 @@
  #!/bin/bash
  set -e
+ 
+-cp /etc/horizon/local_settings.py $HORIZON_VENV_DIR/lib/python2.7/site-packages/openstack_dashboard/local/local_settings.py
++sed -i "s/^ALLOWED_HOSTS.*/ALLOWED_HOSTS = [\"*\"]/" /etc/openstack-dashboard/local_settings
  
 -# TODO(shadower) workaround for:
 -# https://bugs.launchpad.net/os-apply-config/+bug/1246266
 -chmod 600 /etc/horizon/.secret_key_store
 -chown horizon:horizon /etc/horizon/.secret_key_store
-+sed -i "s/^ALLOWED_HOSTS.*/ALLOWED_HOSTS = [\"*\"]/" /etc/openstack-dashboard/local_settings
- 
+-
 -# Precompile the Horizon assets. Can't do it in install.d because it depends on
 -# the local_settings.py config file.
--source /opt/stack/venvs/horizon/bin/activate
+-source $HORIZON_VENV_DIR/bin/activate
 -DJANGO_SETTINGS_MODULE=openstack_dashboard.settings django-admin.py compress
 +os-svc-restart -n httpd
 -- 
