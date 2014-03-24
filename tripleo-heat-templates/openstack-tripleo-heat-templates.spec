@@ -1,6 +1,6 @@
 Name:		openstack-tripleo-heat-templates
 Summary:	Heat templates for TripleO
-Version:	0.4.1
+Version:	0.4.2
 Release:	1%{?dist}
 License:	ASL 2.0
 Group:		System Environment/Base
@@ -15,10 +15,6 @@ Patch0001:	0001-WaitConditionHandle.patch
 # this patch sed's the templates to switch them all over to use qpid, which is
 # the default we want for RDO.
 Patch0002:	0002-use-qpid.patch
-
-# https://review.openstack.org/#/c/79815/
-# git format-patch -1 640f7e2d8b6a2d43fa5e04c7424d98e508d317e4
-Patch0003:	0003-Remove-Duplicate-Rabbit-Parameters.patch
 
 BuildArch:	noarch
 BuildRequires:	python2-devel
@@ -37,7 +33,6 @@ building Heat Templates to do deployments of OpenStack.
 
 %patch0001 -p1
 %patch0002 -p1
-%patch0003 -p1
 
 %build
 %{__python2} setup.py build
@@ -55,6 +50,9 @@ cp -ar *.yaml %{buildroot}/%{_datadir}/%{name}
 %{_bindir}/tripleo-heat-merge
 
 %changelog
+* Mon Mar 24 2014 James Slagle <jslagle@redhat.com> - 0.4.2-1
+- Bump to 0.4.2.
+
 * Fri Mar 21 2014 James Slagle <jslagle@redhat.com> - 0.4.1-1
 - Rebase onto 0.4.1.
 - Add patch to switch from rabbit to qpid as default message bus
