@@ -9,4 +9,4 @@ command[0] = "/usr/libexec/openstack-tripleo/%s" % command[0]
 
 os.environ["PATH"] = "%s:/usr/libexec/openstack-tripleo" % os.environ["PATH"]
 
-subprocess.call(command)
+sys.exit(subprocess.call(command))
