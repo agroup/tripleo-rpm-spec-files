@@ -30,10 +30,6 @@ installation.
 %setup -q -n %{name}-%{commit}
 
 
-%build
-# nothing to build
-
-
 %install
 # elements
 install -d -m 755 %{buildroot}/%{_datadir}/%{name}
@@ -64,6 +60,7 @@ cp -ar json-files %{buildroot}/%{_datadir}/instack-undercloud
 %changelog
 * Mon Mar 24 2014 James Slagle <jslagle@redhat.com> 0.0.1-0.1.20140324git
 - Bump to latest from git.
+- Fix Summary and remove empty build.
 
 * Thu Mar 20 2014 James Slagle <jslagle@redhat.com> 0.0.1-0.1.20140319git
 - Add new scripts instack-build-images and instack-virt-setup
