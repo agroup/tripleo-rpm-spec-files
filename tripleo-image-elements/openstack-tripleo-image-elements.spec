@@ -50,6 +50,10 @@ Patch008:	0008-Add-missing-x.patch
 # git format-patch -1 2e37cf5ba9499ae99d86f017ecb9cf72a206a022
 Patch0009:	0009-Create-and-use-libvirtd-group-for-package-install.patch
 
+# No service for swift-container-sync exists in rdo, temporarily patch the
+# enable and restart for this service out until we figure out the right fix.
+Patch0010:	0010-No-swift-continer-sync-service.patch
+
 BuildArch:	noarch
 BuildRequires:	python
 BuildRequires:	python2-devel
@@ -76,6 +80,7 @@ program.
 %patch0007 -p1
 %patch0008 -p1
 %patch0009 -p1
+%patch0010 -p1
 
 %build
 %{__python} setup.py build
