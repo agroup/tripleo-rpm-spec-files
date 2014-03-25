@@ -1,4 +1,4 @@
-%global commit da785bc0711a09cb1cb79704247d62686c3fd8c7
+%global commit 62af7d3e55bff444048fbe22581d4294f2f4a06f
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 %global alphatag 20140325git
 
