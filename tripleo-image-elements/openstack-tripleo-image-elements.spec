@@ -4,7 +4,7 @@
 Name:		openstack-tripleo-image-elements
 Summary:	OpenStack TripleO Image Elements for diskimage-builder
 Version:	0.6.3
-Release:	2%{?dist}
+Release:	3%{?dist}
 License:	ASL 2.0
 Group:		System Environment/Base
 URL:		https://wiki.openstack.org/wiki/TripleO
@@ -54,6 +54,21 @@ Patch0009:	0009-Create-and-use-libvirtd-group-for-package-install.patch
 # enable and restart for this service out until we figure out the right fix.
 Patch0010:	0010-No-swift-continer-sync-service.patch
 
+# Workaround for:
+# https://bugzilla.redhat.com/show_bug.cgi?id=1080438
+# /etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini should be in the neutron group.
+# Should probably be submitted upstream if we don't get a fixed RDO package.
+Patch0011:	0011-ovs-neutron-plugin-ini-neutron-group
+
+# openstack-cinder no longer requires scsi-target-utils, so we must install the
+# package manually.
+# This needs to be submitted upstream since tgt is the upstream default.
+Patch0012:	0012-cinder-install-tgt.patch
+
+# https://review.openstack.org/#/c/82804/
+# git format-patch -1 1f3d64e5a21f0a9e32d76d0fb1cdf6c68f0b5614
+Patch0013:	0013-Expose-dnsmasq-options.patch
+
 BuildArch:	noarch
 BuildRequires:	python
 BuildRequires:	python2-devel
@@ -81,6 +96,9 @@ program.
 %patch0008 -p1
 %patch0009 -p1
 %patch0010 -p1
+%patch0011 -p1
+%patch0012 -p1
+%patch0013 -p1
 
 %build
 %{__python} setup.py build
@@ -100,6 +118,9 @@ find %{buildroot} -name .git-keep-empty | xargs rm -f
 %{_datadir}/tripleo-image-elements
 
 %changelog
+* Tue Mar 25 2014 James Slagle <jslagle@redhat.com> - 0.6.3-3
+- Add additional patches for some needed workarounds.
+
 * Sun Mar 23 2014 James Slagle <jslagle@redhat.com> - 0.6.3-2
 - Add Patch 0008-Add-missing-x.patch
 - Add Patch 0009-Create-and-use-libvirtd-group-for-package-install.patch
