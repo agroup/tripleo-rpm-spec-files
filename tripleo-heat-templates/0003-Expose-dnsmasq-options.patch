@@ -1,0 +1,58 @@
+From bfb69e018573e23e45f2369ed818c1f4b29f46f0 Mon Sep 17 00:00:00 2001
+From: James Slagle <jslagle@redhat.com>
+Date: Tue, 25 Mar 2014 08:34:29 -0400
+Subject: [PATCH] Expose dnsmasq options
+
+Adds a new parameter, NeutronDnsmasqOptions, to the overcloud template.
+
+Allows the ability to set dnsmasq options for neutron dhcp agent. This
+will allow us to configure mtu to be 1400 for tenant instances on the
+overcloud.  This should help with poor network performance and vm's that
+are just plain unreachable via ssh due to the GRE tunnel overhead.
+
+I think it's also worth considering just making the default here:
+dhcp-option-force=26,1400
+instead of ''.
+
+This is the recommended way to configure OpenStack with the Open vSwitch
+plugin per:
+http://docs.openstack.org/admin-guide-cloud/content/openvswitch_plugin.html
+
+All the documentation I can find on the web (openstack-dev,
+ask.openstack.org, etc), recommend applying this setting. Others have
+reported slow vm performance as well, and this resolves that issue
+(apparently anyway...we'd need to test).
+
+Change-Id: If24326045987b5a484ba2f71f591092987966536
+Partial-Bug: #1270646
+---
+ overcloud-source.yaml | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/overcloud-source.yaml b/overcloud-source.yaml
+index 90543bb..bc24c86 100644
+--- a/overcloud-source.yaml
++++ b/overcloud-source.yaml
+@@ -121,6 +121,10 @@ Parameters:
+     Default: ''
+     Description: If set, the public interface is a vlan with this device as the raw device.
+     Type: String
++  NeutronDnsmasqOptions:
++    Default: ''
++    Description: Dnsmasq options for neutron-dhcp-agent
++    Type: String
+   notcomputeImage:
+     Type: String
+     Default: overcloud-control
+@@ -422,6 +426,8 @@ Resources:
+         ovs_db: mysql://neutron:unset@localhost/ovs_neutron?charset=utf8
+         service-password:
+           Ref: NeutronPassword
++        dnsmasq-options:
++          Ref: NeutronDnsmasqOptions
+       ceilometer:
+         db: mysql://ceilometer:unset@localhost/ceilometer
+         metering_secret: {Ref: CeilometerMeteringSecret}
+-- 
+1.8.5.3
+

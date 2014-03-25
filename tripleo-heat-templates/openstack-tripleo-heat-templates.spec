@@ -1,7 +1,7 @@
 Name:		openstack-tripleo-heat-templates
 Summary:	Heat templates for TripleO
 Version:	0.4.2
-Release:	1%{?dist}
+Release:	2%{?dist}
 License:	ASL 2.0
 Group:		System Environment/Base
 URL:		https://wiki.openstack.org/wiki/TripleO
@@ -15,6 +15,10 @@ Patch0001:	0001-WaitConditionHandle.patch
 # this patch sed's the templates to switch them all over to use qpid, which is
 # the default we want for RDO.
 Patch0002:	0002-use-qpid.patch
+
+# https://review.openstack.org/#/c/82803/
+# git format-patch -1 55722cc7fa4624e4738bb695348955745e297649
+Patch0003:	0003-Expose-dnsmasq-options.patch
 
 BuildArch:	noarch
 BuildRequires:	python2-devel
@@ -33,6 +37,7 @@ building Heat Templates to do deployments of OpenStack.
 
 %patch0001 -p1
 %patch0002 -p1
+%patch0003 -p1
 
 %build
 %{__python2} setup.py build
@@ -50,6 +55,9 @@ cp -ar *.yaml %{buildroot}/%{_datadir}/%{name}
 %{_bindir}/tripleo-heat-merge
 
 %changelog
+* Tue Mar 25 2014 James Slagle <jslagle@redhat.com> - 0.4.2-2
+- Add patch 0003-Expose-dnsmasq-options.patch
+
 * Mon Mar 24 2014 James Slagle <jslagle@redhat.com> - 0.4.2-1
 - Bump to 0.4.2.
 
