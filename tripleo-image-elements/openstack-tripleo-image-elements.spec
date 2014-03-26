@@ -4,7 +4,7 @@
 Name:		openstack-tripleo-image-elements
 Summary:	OpenStack TripleO Image Elements for diskimage-builder
 Version:	0.6.3
-Release:	3%{?dist}
+Release:	4%{?dist}
 License:	ASL 2.0
 Group:		System Environment/Base
 URL:		https://wiki.openstack.org/wiki/TripleO
@@ -118,6 +118,10 @@ find %{buildroot} -name .git-keep-empty | xargs rm -f
 %{_datadir}/tripleo-image-elements
 
 %changelog
+* Wed Mar 26 2014 James Slagle <jslagle@redhat.com> - 0.6.3-4
+- Fix 0002-Fix-tgt-target-in-cinder-element.patch, which was misgenerated
+  before
+
 * Tue Mar 25 2014 James Slagle <jslagle@redhat.com> - 0.6.3-3
 - Add additional patches for some needed workarounds.
 
