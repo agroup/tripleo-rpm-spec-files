@@ -1,8 +1,36 @@
+From b322fdfe366754bf6b06582a572c295a60b4495c Mon Sep 17 00:00:00 2001
+From: James Slagle <jslagle@redhat.com>
+Date: Wed, 26 Mar 2014 13:39:26 -0400
+Subject: [PATCH] use qpid
+
+Change-Id: I641fea900fb31a8f4bc04deeeb1f2c44696283d5
+---
+ block-storage-nfs.yaml     | 2 +-
+ block-storage.yaml         | 2 +-
+ notcompute.yaml            | 2 +-
+ nova-compute-instance.yaml | 2 +-
+ overcloud-source.yaml      | 2 +-
+ undercloud-source.yaml     | 2 +-
+ 6 files changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/block-storage-nfs.yaml b/block-storage-nfs.yaml
+index eabe983..9fba1eb 100644
+--- a/block-storage-nfs.yaml
++++ b/block-storage-nfs.yaml
+@@ -62,7 +62,7 @@ Resources:
+         nfs_shares:
+           - {"Fn::Join": ['', [{"Fn::Select": [ 0, {"Fn::Select": [ "ctlplane", {"Fn::GetAtt": [notCompute0, networks]} ]} ] } , ':/mnt/state/var/lib/nfs_share']]}
+       admin-password: {Ref: AdminPassword}
+-      rabbit:
++      qpid:
+         host: {"Fn::Select": [ 0, {"Fn::Select": [ "ctlplane", {"Fn::GetAtt": [notCompute0, networks]} ]} ] }
+         username: {Ref: RabbitUserName}
+         password: {Ref: RabbitPassword}
 diff --git a/block-storage.yaml b/block-storage.yaml
-index ca56fce..c325e85 100644
+index bc14dc8..a4c76e9 100644
 --- a/block-storage.yaml
 +++ b/block-storage.yaml
-@@ -51,7 +51,7 @@ Resources:
+@@ -79,7 +79,7 @@ Resources:
            Ref: CinderPassword
          volume: 'true'
        admin-password: {Ref: AdminPassword}
@@ -12,10 +40,10 @@ index ca56fce..c325e85 100644
          username: {Ref: RabbitUserName}
          password: {Ref: RabbitPassword}
 diff --git a/notcompute.yaml b/notcompute.yaml
-index b097dd0..79c21bf 100644
+index 5a4d9d2..f8be880 100644
 --- a/notcompute.yaml
 +++ b/notcompute.yaml
-@@ -179,7 +179,7 @@ Resources:
+@@ -197,7 +197,7 @@ Resources:
              - - 'mysql://neutron:'
                - {Ref: NeutronDBPassword}
                - '@127.0.0.1/ovs_neutron'
@@ -25,7 +53,7 @@ index b097dd0..79c21bf 100644
            '127.0.0.1'
          username:
 diff --git a/nova-compute-instance.yaml b/nova-compute-instance.yaml
-index 55665dc..a211ed4 100644
+index d2ca90f..d297942 100644
 --- a/nova-compute-instance.yaml
 +++ b/nova-compute-instance.yaml
 @@ -189,7 +189,7 @@ Resources:
@@ -38,10 +66,10 @@ index 55665dc..a211ed4 100644
          username: {Ref: RabbitUserName}
          password: {Ref: RabbitPassword}
 diff --git a/overcloud-source.yaml b/overcloud-source.yaml
-index 6d21a4d..c799e57 100644
+index 90543bb..500d3c3 100644
 --- a/overcloud-source.yaml
 +++ b/overcloud-source.yaml
-@@ -422,7 +422,7 @@ Resources:
+@@ -454,7 +454,7 @@ Resources:
              - SecretAccessKey
            stack_name:
              Ref: AWS::StackName
@@ -51,10 +79,10 @@ index 6d21a4d..c799e57 100644
            Fn::Select:
              - 0
 diff --git a/undercloud-source.yaml b/undercloud-source.yaml
-index efce1e8..95bd6b6 100644
+index f18612c..4d1461e 100644
 --- a/undercloud-source.yaml
 +++ b/undercloud-source.yaml
-@@ -185,7 +185,7 @@ Resources:
+@@ -213,7 +213,7 @@ Resources:
            enable_tunneling: 'False'
          service-password:
            Ref: NeutronPassword
@@ -63,3 +91,6 @@ index efce1e8..95bd6b6 100644
          host: 127.0.0.1
          username:
            Ref: RabbitUserName
+-- 
+1.8.5.3
+

@@ -1,0 +1,117 @@
+From 2c6fa95e62fccf0a97d4fccd1b5a1025631fe49f Mon Sep 17 00:00:00 2001
+From: James Slagle <jslagle@redhat.com>
+Date: Wed, 26 Mar 2014 12:36:48 -0400
+Subject: [PATCH] Add BlockStorageConfig0
+
+Change-Id: Ief8f87d57329640416d760dda0575207dbf89921
+---
+ block-storage.yaml        | 42 ++++++++++++++++++++++++++++++++++++++----
+ swift-storage-source.yaml |  4 ++++
+ 2 files changed, 42 insertions(+), 4 deletions(-)
+
+diff --git a/block-storage.yaml b/block-storage.yaml
+index 507ca63..bc14dc8 100644
+--- a/block-storage.yaml
++++ b/block-storage.yaml
+@@ -8,17 +8,21 @@ Parameters:
+     Default: baremetal
+     Description: Flavor for block storage nodes to request when deploying.
+     Type: String
++  NeutronEnableTunnelling:
++    Type: String
++    Default: True
+ Resources:
+   BlockStorageAccessPolicy:
+     Type: OS::Heat::AccessPolicy
+     Properties:
+       AllowedResources:
+       - BlockStorage0
++      - BlockStorage0Config
+   BlockStorageUser:
+     Type: AWS::IAM::User
+     Properties:
+       Policies: [ { Ref: BlockStorageAccessPolicy } ]
+-  BlockStorageKey:
++  BlockStorage0Key:
+     Type: AWS::IAM::AccessKey
+     Properties:
+       UserName:
+@@ -40,16 +44,32 @@ Resources:
+       flavor: {Ref: OvercloudBlockStorageFlavor}
+       key_name: {Ref: KeyName}
+     Metadata:
++      os-collect-config:
++        cfn:
++          access_key_id:
++            Ref: BlockStorage0Key
++          secret_access_key:
++            Fn::GetAtt: [ BlockStorage0Key, SecretAccessKey ]
++          stack_name: {Ref: 'AWS::StackName'}
++          path: BlockStorage0Config.Metadata
++      OpenStack::ImageBuilder::Elements: [ cinder ]
++  BlockStorage0Config:      
++    Type: AWS::AutoScaling::LaunchConfiguration
++    Properties:
++      InstanceType: '0'
++      ImageId: '0'
++    Metadata:
+       completion-handle:
+         Ref: BlockStorage0CompletionHandle
+       os-collect-config:
+         cfn:
+           access_key_id:
+-            Ref: BlockStorageKey
++            Ref: BlockStorage0Key
+           secret_access_key:
+-            Fn::GetAtt: [ BlockStorageKey, SecretAccessKey ]
++            Fn::GetAtt: [ BlockStorage0Key, SecretAccessKey ]
+           stack_name: {Ref: 'AWS::StackName'}
+-      OpenStack::ImageBuilder::Elements: [ cinder ]
++          path: BlockStorage0Config.Metadata
++      admin-password: {Ref: AdminPassword}
+       keystone:
+         host: {"Fn::Select": [ 0, {"Fn::Select": [ "ctlplane", {"Fn::GetAtt": [notCompute0, networks]} ]} ] }
+       cinder:
+@@ -65,3 +85,17 @@ Resources:
+         password: {Ref: RabbitPassword}
+       interfaces:
+         control: {Ref: NeutronPublicInterface}
++      neutron:
++        ovs:
++          local_ip:
++            Fn::Select:
++              - 0
++              - Fn::Select:
++                - ctlplane
++                - Fn::GetAtt:
++                  - BlockStorage0
++                  - networks
++          tenant_network_type: {Ref: NeutronNetworkType}
++          enable_tunneling: {Ref: NeutronEnableTunnelling}
++        service-password:
++          Ref: NeutronPassword
+diff --git a/swift-storage-source.yaml b/swift-storage-source.yaml
+index 92e11e6..16f2f36 100644
+--- a/swift-storage-source.yaml
++++ b/swift-storage-source.yaml
+@@ -11,6 +11,9 @@ Parameters:
+   NeutronNetworkType:
+     Type: String
+     Default: 'gre'
++  NeutronEnableTunnelling:
++    Type: String
++    Default: True
+ Resources:
+   SwiftStorageAccessPolicy:
+     Type: OS::Heat::AccessPolicy
+@@ -81,6 +84,7 @@ Resources:
+                   - SwiftStorage0
+                   - networks
+           tenant_network_type: {Ref: NeutronNetworkType}
++          enable_tunneling: {Ref: NeutronEnableTunnelling}
+         service-password:
+           Ref: NeutronPassword
+       swift:
+-- 
+1.8.5.3
+

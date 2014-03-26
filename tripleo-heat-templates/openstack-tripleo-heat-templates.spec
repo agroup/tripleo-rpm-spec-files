@@ -1,24 +1,25 @@
 Name:		openstack-tripleo-heat-templates
 Summary:	Heat templates for TripleO
 Version:	0.4.2
-Release:	2%{?dist}
+Release:	3%{?dist}
 License:	ASL 2.0
 Group:		System Environment/Base
 URL:		https://wiki.openstack.org/wiki/TripleO
 Source0:	http://tarballs.openstack.org/tripleo-heat-templates/tripleo-heat-templates-%{version}.tar.gz
 
-# Roll back the switch to use OS::Heat::UpdateWaitConditionHandle, since RDO
-# openstack-heat does not yet have that functionality.
-Patch0001:	0001-WaitConditionHandle.patch
+# Not yet submitted upstream
+# Add BlockStorage0Config and enable_tunneling to block-storage and
+# swift-storage-source ovs metadata sections.
+Patch0001:	0001-Add-BlockStorageConfig0.patch
+
+# https://review.openstack.org/#/c/82803/
+# git format-patch -1 55722cc7fa4624e4738bb695348955745e297649
+Patch0002:	0002-Expose-dnsmasq-options.patch
 
 # Per: # https://github.com/openstack/tripleo-image-elements/tree/master/elements/qpidd,
 # this patch sed's the templates to switch them all over to use qpid, which is
 # the default we want for RDO.
-Patch0002:	0002-use-qpid.patch
-
-# https://review.openstack.org/#/c/82803/
-# git format-patch -1 55722cc7fa4624e4738bb695348955745e297649
-Patch0003:	0003-Expose-dnsmasq-options.patch
+Patch0003:	0003-use-qpid.patch
 
 BuildArch:	noarch
 BuildRequires:	python2-devel
@@ -55,6 +56,9 @@ cp -ar *.yaml %{buildroot}/%{_datadir}/%{name}
 %{_bindir}/tripleo-heat-merge
 
 %changelog
+* Wed Mar 26 2014 James Slagle <jslagle@redhat.com> - 0.4.2-3
+- Update patches
+
 * Tue Mar 25 2014 James Slagle <jslagle@redhat.com> - 0.4.2-2
 - Add patch 0003-Expose-dnsmasq-options.patch
 
