@@ -1,10 +1,10 @@
-%global commit d1b690274dbe8ff5854a25f7437da2c39ad1b7c5
+%global commit fc3e674f81adabe620fc5272b8b1d8601cd93798
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
-%global alphatag 20140325git
+%global alphatag 20140326git
 
 Name:		instack-undercloud
 Version:	0.0.1
-Release:	0.3.%{alphatag}%{?dist}
+Release:	0.4.%{alphatag}%{?dist}
 Summary:	Installation tools to install an undercloud via instack
 
 Group:		Development/Languages
@@ -58,6 +58,9 @@ cp -ar json-files %{buildroot}/%{_datadir}/instack-undercloud
 
 
 %changelog
+* Wed Mar 26 2014 James Slagle <jslagle@redhat.com> 0.0.1-0.4.20140326git
+- Bump to latest from git.
+
 * Tue Mar 25 2014 James Slagle <jslagle@redhat.com> 0.0.1-0.3.20140325git
 - Bump to latest from git.
 
