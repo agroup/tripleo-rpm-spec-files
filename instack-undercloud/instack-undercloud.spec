@@ -1,10 +1,10 @@
-%global commit fc3e674f81adabe620fc5272b8b1d8601cd93798
+%global commit f645bada6c1a1cb4f7f74cefd4f8600d09add0b9
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
-%global alphatag 20140326git
+%global alphatag 20140327git
 
 Name:		instack-undercloud
 Version:	0.0.1
-Release:	0.4.%{alphatag}%{?dist}
+Release:	0.5.%{alphatag}%{?dist}
 Summary:	Installation tools to install an undercloud via instack
 
 Group:		Development/Languages
@@ -58,6 +58,10 @@ cp -ar json-files %{buildroot}/%{_datadir}/instack-undercloud
 
 
 %changelog
+* Thu Mar 27 2014 James Slagle <jslagle@redhat.com> 0.0.1-0.5.20140327git
+- Bump to latest from git.
+- Add restart for openstack-tuskar-api to instack-deploy-overcloud-tuskarcli
+
 * Wed Mar 26 2014 James Slagle <jslagle@redhat.com> 0.0.1-0.4.20140326git
 - Bump to latest from git.
 

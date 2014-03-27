@@ -1,22 +1,25 @@
-From 2c6fa95e62fccf0a97d4fccd1b5a1025631fe49f Mon Sep 17 00:00:00 2001
+From bef2aec2ef2ae78696e0282d769039ad4717a200 Mon Sep 17 00:00:00 2001
 From: James Slagle <jslagle@redhat.com>
 Date: Wed, 26 Mar 2014 12:36:48 -0400
 Subject: [PATCH] Add BlockStorageConfig0
 
 Change-Id: Ief8f87d57329640416d760dda0575207dbf89921
 ---
- block-storage.yaml        | 42 ++++++++++++++++++++++++++++++++++++++----
+ block-storage.yaml        | 45 +++++++++++++++++++++++++++++++++++++++++----
  swift-storage-source.yaml |  4 ++++
- 2 files changed, 42 insertions(+), 4 deletions(-)
+ 2 files changed, 45 insertions(+), 4 deletions(-)
 
 diff --git a/block-storage.yaml b/block-storage.yaml
-index 507ca63..bc14dc8 100644
+index 507ca63..1129355 100644
 --- a/block-storage.yaml
 +++ b/block-storage.yaml
-@@ -8,17 +8,21 @@ Parameters:
+@@ -8,17 +8,24 @@ Parameters:
      Default: baremetal
      Description: Flavor for block storage nodes to request when deploying.
      Type: String
++  NeutronNetworkType:
++    Type: String
++    Default: 'gre'
 +  NeutronEnableTunnelling:
 +    Type: String
 +    Default: True
@@ -36,7 +39,7 @@ index 507ca63..bc14dc8 100644
      Type: AWS::IAM::AccessKey
      Properties:
        UserName:
-@@ -40,16 +44,32 @@ Resources:
+@@ -40,16 +47,32 @@ Resources:
        flavor: {Ref: OvercloudBlockStorageFlavor}
        key_name: {Ref: KeyName}
      Metadata:
@@ -72,7 +75,7 @@ index 507ca63..bc14dc8 100644
        keystone:
          host: {"Fn::Select": [ 0, {"Fn::Select": [ "ctlplane", {"Fn::GetAtt": [notCompute0, networks]} ]} ] }
        cinder:
-@@ -65,3 +85,17 @@ Resources:
+@@ -65,3 +88,17 @@ Resources:
          password: {Ref: RabbitPassword}
        interfaces:
          control: {Ref: NeutronPublicInterface}
