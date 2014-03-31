@@ -13,7 +13,7 @@
 Name:		openstack-ironic
 Summary:	OpenStack Baremetal Hypervisor API (ironic)
 Version:	2014.1
-Release:	%{release_letter}%{milestone}.4%{?dist}
+Release:	%{release_letter}%{milestone}.5%{?dist}
 License:	ASL 2.0
 Group:		System Environment/Base
 URL:		http://www.openstack.org
@@ -36,30 +36,6 @@ BuildRequires:	gmp-devel
 BuildRequires:	python-sphinx
 BuildRequires:	systemd
 
-Requires:	python-eventlet
-Requires:	python-fixtures
-Requires:	python-iso8601
-Requires:	python-jsonpatch
-Requires:	python-kombu
-Requires:	python-anyjson
-Requires:	python-migrate
-Requires:	python-mock
-Requires:	python-netaddr
-Requires:	python-paramiko
-Requires:	python-pecan
-Requires:	python-stevedore
-Requires:	python-wsme
-Requires:	pycrypto
-Requires:	python-sqlalchemy
-Requires:	python-neutronclient
-Requires:	python-glanceclient
-Requires:	python-keystoneclient
-Requires:	python-jinja2
-Requires:	python-pyghmi
-Requires(pre):	shadow-utils
-
-%description
-Ironic provides an API for management and provisioning of physical machines
 
 %prep
 %setup -q -n %{full_release}
@@ -88,36 +64,116 @@ install -p -D -m 640 %{_builddir}/%{full_release}/etc/ironic/policy.json %{build
 install -p -D -m 640 %{_builddir}/%{full_release}/etc/ironic/rootwrap.conf %{buildroot}/%{_sysconfdir}/ironic/rootwrap.conf
 install -p -D -m 640 %{_builddir}/%{full_release}/etc/ironic/rootwrap.d/* %{buildroot}/%{_sysconfdir}/ironic/rootwrap.d/
 
-%files
+
+%description
+Ironic provides an API for management and provisioning of physical machines
+
+%package common
+Summary: Ironic common
+Group: System Environment/Base
+
+Requires:	python-eventlet
+Requires:	python-fixtures
+Requires:	python-iso8601
+Requires:	python-jsonpatch
+Requires:	python-kombu
+Requires:	python-anyjson
+Requires:	python-migrate
+Requires:	python-mock
+Requires:	python-netaddr
+Requires:	python-paramiko
+Requires:	python-pecan
+Requires:	python-stevedore
+Requires:	python-wsme
+Requires:	pycrypto
+Requires:	python-sqlalchemy
+Requires:	python-neutronclient
+Requires:	python-glanceclient
+Requires:	python-keystoneclient
+Requires:	python-jinja2
+Requires:	python-pyghmi
+
+Requires(pre):	shadow-utils
+
+%description common
+Components common to all OpenStack Ironic services
+
+
+%files common
 %doc README.rst LICENSE
-%{_bindir}/*
- %{_unitdir}/*
+%{_bindir}/ironic-dbsync
+%{_bindir}/ironic-rootwrap
 %{python_sitelib}/ironic*
 %config(noreplace) %attr(-,root,ironic) %{_sysconfdir}/ironic
 %attr(-,ironic,ironic) %{_sharedstatedir}/ironic
 
-# TODO - Switch to a statid UID/GID allocation https://fedorahosted.org/fpc/ticket/396
-%pre
+%pre common
 getent group ironic >/dev/null || groupadd -r ironic
 getent passwd ironic >/dev/null || \
     useradd -r -g ironic -d %{_sharedstatedir}/ironic -s /sbin/nologin \
 -c "OpenStack Ironic Daemons" ironic
 exit 0
 
-%post
+%package api
+Summary: The Ironic API
+Group: System Environment/Base
+
+Requires: %{name}-common = %{version}-%{release}
+
+Requires(post): systemd
+Requires(preun): systemd
+Requires(postun): systemd
+
+%description api
+Ironic API for management and provisioning of physical machines
+
+
+%files api
+%{_bindir}/ironic-api
+%{_unitdir}/openstack-ironic-api.service
+
+%post api
 %systemd_post openstack-ironic-api.service
+
+%preun api
+%systemd_preun openstack-ironic-api.service
+
+%postun api
+%systemd_postun_with_restart openstack-ironic-api.service
+
+%package conductor
+Summary: The Ironic Conductor
+Group: System Environment/Base
+
+Requires: %{name}-common = %{version}-%{release}
+
+Requires(post): systemd
+Requires(preun): systemd
+Requires(postun): systemd
+
+%description conductor
+Ironic Conductor for management and provisioning of physical machines
+
+
+%files conductor
+%{_bindir}/ironic-conductor
+%{_unitdir}/openstack-ironic-conductor.service
+
+%post conductor
 %systemd_post openstack-ironic-conductor.service
 
-%preun
-%systemd_preun openstack-ironic-api.service
+%preun conductor
 %systemd_preun openstack-ironic-conductor.service
 
-%postun
-%systemd_postun_with_restart openstack-ironic-api.service
+%postun conductor
 %systemd_postun_with_restart openstack-ironic-conductor.service
 
 
+
 %changelog
+
+* Thu Mar 27 2014 Angus Thomas <athomas@redhat.com> - 2014.1-b2.5
+- Split into multiple packages
 
 * Fri Feb 28 2014 Angus Thomas <athomas@redhat.com> - 2014.1-b2.4
 - Restored BuildRequires: python-pbr 
@@ -127,7 +183,7 @@ exit 0
 - Patch to remove pbr build dependency
 - Fixed python2-devel build dependency
 - Added noreplace to config files
-- Added  %{_unitdir} for systemd service file installation
+- Added  unitdir macro for systemd service file installation
 - Added scripts to manage systemd services
 - Removed unnecessary Requires & BuildRequires
 
