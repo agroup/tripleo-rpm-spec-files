@@ -1,10 +1,10 @@
-%global commit f645bada6c1a1cb4f7f74cefd4f8600d09add0b9
+%global commit 14cdd5060a1bea13de05e36df3f45bf87283a53e
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
-%global alphatag 20140327git
+%global alphatag 20140401git
 
 Name:		instack-undercloud
 Version:	0.0.1
-Release:	0.5.%{alphatag}%{?dist}
+Release:	0.6.%{alphatag}%{?dist}
 Summary:	Installation tools to install an undercloud via instack
 
 Group:		Development/Languages
@@ -47,6 +47,7 @@ cp -ar json-files %{buildroot}/%{_datadir}/instack-undercloud
 %doc instack-baremetal.answers.sample
 %doc instack-virt.answers.sample
 %{_datadir}/instack-undercloud
+%{_bindir}/instack-install-dependencies
 %{_bindir}/instack-install-undercloud
 %{_bindir}/instack-install-undercloud-packages
 %{_bindir}/instack-prepare-for-overcloud
@@ -58,9 +59,16 @@ cp -ar json-files %{buildroot}/%{_datadir}/instack-undercloud
 
 
 %changelog
+* Tue Apr 01 2014 James Slagle <jslagle@redhat.com> 0.0.1-0.7.20140401git
+- Bump to latest from git.
+
+* Fri Mar 28 2014 James Slagle <jslagle@redhat.com> 0.0.1-0.6.20140328git
+- Install novnc from package
+
 * Thu Mar 27 2014 James Slagle <jslagle@redhat.com> 0.0.1-0.5.20140327git
 - Bump to latest from git.
 - Add restart for openstack-tuskar-api to instack-deploy-overcloud-tuskarcli
+- Add cinder and swift tests to instack-test-overcloud
 
 * Wed Mar 26 2014 James Slagle <jslagle@redhat.com> 0.0.1-0.4.20140326git
 - Bump to latest from git.
