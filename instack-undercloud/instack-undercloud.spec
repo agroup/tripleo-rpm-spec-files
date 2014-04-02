@@ -3,7 +3,7 @@
 %global alphatag 20140324git
 
 Name:		instack-undercloud
-Version:	0.0.1
+Version:	0
 Release:	0.1.%{alphatag}%{?dist}
 Summary:	Installation tools to install an undercloud via instack
 
@@ -58,6 +58,9 @@ cp -ar json-files %{buildroot}/%{_datadir}/instack-undercloud
 
 
 %changelog
+* Wed Apr 02 2014 James Slagle <jslagle@redhat.com> 0-0.1.20140324git
+- Reset Version field to 0.
+
 * Mon Mar 24 2014 James Slagle <jslagle@redhat.com> 0.0.1-0.1.20140324git
 - Bump to latest from git.
 - Fix Summary and remove empty build.
