@@ -1,10 +1,10 @@
-%global commit c25a8803e546dd7dd88a855489e37ca9d947382a
+%global commit 28bb0c0fbae4429f283a154c9240cb3932836570
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 %global alphatag 20140402git
 
 Name:		instack-undercloud
 Version:	0
-Release:	0.7.%{alphatag}%{?dist}
+Release:	0.8.%{alphatag}%{?dist}
 Summary:	Installation tools to install an undercloud via instack
 
 Group:		Development/Languages
@@ -59,6 +59,9 @@ cp -ar json-files %{buildroot}/%{_datadir}/instack-undercloud
 
 
 %changelog
+* Thu Apr 03 2014 James Slagle <jslagle@redhat.com> 0-0.8.20140403git
+- Remove code that depends on updates-testing repo
+
 * Wed Apr 02 2014 James Slagle <jslagle@redhat.com> 0-0.7.20140402git
 - Bump to latest from git.
 - Reset version to 0
