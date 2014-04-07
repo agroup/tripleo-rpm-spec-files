@@ -5,19 +5,21 @@
 %endif
 
 %global	release_name icehouse
-%global	release_letter b
-%global	milestone 2
+%global	release_letter rc
+%global	milestone 1
 %global	full_release ironic-%{version}.%{release_letter}%{milestone}
 
 
 Name:		openstack-ironic
 Summary:	OpenStack Baremetal Hypervisor API (ironic)
 Version:	2014.1
-Release:	%{release_letter}%{milestone}.5%{?dist}
+Release:	%{release_letter}%{milestone}.1%{?dist}
 License:	ASL 2.0
 Group:		System Environment/Base
 URL:		http://www.openstack.org
-Source0:	https://launchpad.net/ironic/%{release_name}/%{release_name}-%{milestone}/+download/%{full_release}.tar.gz
+#Source0:	https://launchpad.net/ironic/%{release_name}/%{release_name}-%{milestone}/+download/%{full_release}.tar.gz
+Source0:	https://launchpad.net/ironic/icehouse/icehouse-rc1/+download/ironic-2014.1.rc1.tar.gz
+
 
 Source1:	openstack-ironic-api.service
 Source2:	openstack-ironic-conductor.service
@@ -92,6 +94,7 @@ Requires:	python-glanceclient
 Requires:	python-keystoneclient
 Requires:	python-jinja2
 Requires:	python-pyghmi
+Requires:	python-alembic
 
 Requires(pre):	shadow-utils
 
@@ -171,6 +174,11 @@ Ironic Conductor for management and provisioning of physical machines
 
 
 %changelog
+
+* Mon Apr 7 2014 Angus Thomas <athomas@redhat.com> - 2014.1-rc1.1
+- Rebuilt with -rc1 tarball
+- Rebased patches
+- Added dependency on python-alembic
 
 * Thu Mar 27 2014 Angus Thomas <athomas@redhat.com> - 2014.1-b2.5
 - Split into multiple packages
