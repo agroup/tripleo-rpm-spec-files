@@ -13,7 +13,7 @@
 Name:		openstack-ironic
 Summary:	OpenStack Baremetal Hypervisor API (ironic)
 Version:	2014.1
-Release:	%{release_letter}%{milestone}.1%{?dist}
+Release:	%{release_letter}%{milestone}.2%{?dist}
 License:	ASL 2.0
 Group:		System Environment/Base
 URL:		http://www.openstack.org
@@ -132,6 +132,7 @@ Ironic API for management and provisioning of physical machines
 
 
 %files api
+%doc LICENSE
 %{_bindir}/ironic-api
 %{_unitdir}/openstack-ironic-api.service
 
@@ -159,6 +160,7 @@ Ironic Conductor for management and provisioning of physical machines
 
 
 %files conductor
+%doc LICENSE
 %{_bindir}/ironic-conductor
 %{_unitdir}/openstack-ironic-conductor.service
 
@@ -174,6 +176,9 @@ Ironic Conductor for management and provisioning of physical machines
 
 
 %changelog
+
+* Wed Apr 9 2014 Angus Thomas <athomas@redhat.com> - 2014.1-rc1.2
+- License file in each package
 
 * Mon Apr 7 2014 Angus Thomas <athomas@redhat.com> - 2014.1-rc1.1
 - Rebuilt with -rc1 tarball
